@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800;900&display=swap');
+  body { width: 1200px; height: 630px; font-family: 'Inter', sans-serif; overflow: hidden; }
+
+  .card {
+    width: 1200px; height: 630px;
+    background: linear-gradient(145deg, #0a0e1a 0%, #141e3d 30%, #243880 60%, #2d4590 80%, #1a2a5a 100%);
+    position: relative; display: flex; align-items: center; padding: 0 80px;
+  }
+
+  /* Subtle vignette */
+  .card::after {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 30% 50%, transparent 40%, rgba(0,0,0,0.3) 100%);
+  }
+
+  /* Gold accent bar */
+  .gold-bar { position: absolute; bottom: 0; left: 0; right: 0; height: 6px; background: linear-gradient(90deg, #c47f09, #F59E0B, #ffca28, #F59E0B, #c47f09); z-index: 2; }
+
+  .content { position: relative; z-index: 1; flex: 1; }
+
+  .company {
+    font-size: 72px; font-weight: 900; color: #fff; letter-spacing: -0.03em; line-height: 1;
+    text-shadow: 0 4px 30px rgba(0,0,0,0.3);
+  }
+
+  .tagline {
+    font-size: 26px; font-weight: 500; color: rgba(255,255,255,0.55); margin-top: 18px; line-height: 1.3;
+  }
+
+  .tagline .dot { color: #F59E0B; font-weight: 800; }
+
+  .info-bar {
+    margin-top: 40px; display: flex; gap: 28px; align-items: center;
+  }
+
+  .info-item {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 14px; font-weight: 600; color: rgba(255,255,255,0.45);
+  }
+
+  .info-icon {
+    width: 30px; height: 30px; border-radius: 8px; display: flex; align-items: center; justify-content: center;
+  }
+  .info-icon.gold { background: rgba(245,158,11,0.12); }
+  .info-icon.green { background: rgba(34,197,94,0.12); }
+
+  /* Ship illustration - right side */
+  .ship-area {
+    position: relative; z-index: 1; width: 340px; display: flex; align-items: center; justify-content: center;
+  }
+
+  .ship-svg {
+    width: 280px; height: 280px; opacity: 0.15;
+    filter: drop-shadow(0 0 40px rgba(255,255,255,0.1));
+  }
+
+  /* Stats floating */
+  .stats-float {
+    position: absolute; z-index: 1; top: 50px; right: 80px;
+    display: flex; gap: 20px;
+  }
+  .stat-pill {
+    background: rgba(255,255,255,0.06); backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,255,255,0.08); border-radius: 12px;
+    padding: 10px 16px; text-align: center;
+  }
+  .stat-num { font-size: 22px; font-weight: 800; color: #fff; }
+  .stat-label { font-size: 9px; font-weight: 600; color: rgba(255,255,255,0.35); text-transform: uppercase; letter-spacing: 0.06em; margin-top: 2px; }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="gold-bar"></div>
+
+  <!-- Stats top right -->
+  <div class="stats-float">
+    <div class="stat-pill"><div class="stat-num">20+</div><div class="stat-label">Years</div></div>
+    <div class="stat-pill"><div class="stat-num">28K+</div><div class="stat-label">Deliveries</div></div>
+    <div class="stat-pill"><div class="stat-num">40+</div><div class="stat-label">Ports</div></div>
+    <div class="stat-pill"><div class="stat-num">24/7</div><div class="stat-label">Service</div></div>
+  </div>
+
+  <!-- Left content -->
+  <div class="content">
+    <div class="company">TOK SHIP SUPPLY</div>
+    <div class="tagline">Ship Chandlery at All Turkish Ports<span class="dot">.</span></div>
+
+    <div class="info-bar">
+      <div class="info-item">
+        <div class="info-icon gold">
+          <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="#F59E0B" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+        </div>
+        +90 545 947 73 20
+      </div>
+      <div class="info-item">
+        <div class="info-icon green">
+          <svg width="14" height="14" fill="#22c55e" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.875 1.213 3.074c.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/></svg>
+        </div>
+        WhatsApp
+      </div>
+      <div class="info-item" style="color: rgba(255,255,255,0.35);">
+        tokkumanya.com
+      </div>
+    </div>
+  </div>
+
+  <!-- Ship SVG illustration -->
+  <div class="ship-area">
+    <svg class="ship-svg" viewBox="0 0 200 200" fill="white" xmlns="http://www.w3.org/2000/svg">
+      <!-- Container Ship -->
+      <g transform="translate(10, 40)">
+        <!-- Hull -->
+        <path d="M0 120 L15 140 L165 140 L180 120 L170 120 L170 70 L10 70 L10 120 Z" fill="white" opacity="0.9"/>
+        <!-- Water line -->
+        <path d="M0 142 Q45 148 90 142 Q135 136 180 142" stroke="white" stroke-width="2" fill="none" opacity="0.4"/>
+        <path d="M-10 150 Q50 158 100 150 Q150 142 190 150" stroke="white" stroke-width="1.5" fill="none" opacity="0.2"/>
+        <!-- Containers row 1 -->
+        <rect x="18" y="75" width="22" height="18" rx="2" fill="white" opacity="0.7"/>
+        <rect x="44" y="75" width="22" height="18" rx="2" fill="white" opacity="0.5"/>
+        <rect x="70" y="75" width="22" height="18" rx="2" fill="white" opacity="0.7"/>
+        <rect x="96" y="75" width="22" height="18" rx="2" fill="white" opacity="0.5"/>
+        <rect x="122" y="75" width="22" height="18" rx="2" fill="white" opacity="0.7"/>
+        <rect x="148" y="75" width="18" height="18" rx="2" fill="white" opacity="0.5"/>
+        <!-- Containers row 2 -->
+        <rect x="18" y="97" width="22" height="18" rx="2" fill="white" opacity="0.5"/>
+        <rect x="44" y="97" width="22" height="18" rx="2" fill="white" opacity="0.7"/>
+        <rect x="70" y="97" width="22" height="18" rx="2" fill="white" opacity="0.5"/>
+        <rect x="96" y="97" width="22" height="18" rx="2" fill="white" opacity="0.7"/>
+        <rect x="122" y="97" width="22" height="18" rx="2" fill="white" opacity="0.5"/>
+        <rect x="148" y="97" width="18" height="18" rx="2" fill="white" opacity="0.7"/>
+        <!-- Bridge/Cabin -->
+        <rect x="25" y="42" width="35" height="28" rx="3" fill="white" opacity="0.8"/>
+        <rect x="30" y="46" width="10" height="8" rx="1" fill="white" opacity="0.3"/>
+        <rect x="44" y="46" width="10" height="8" rx="1" fill="white" opacity="0.3"/>
+        <!-- Funnel -->
+        <rect x="33" y="26" width="18" height="16" rx="2" fill="white" opacity="0.9"/>
+        <rect x="36" y="30" width="12" height="3" rx="1" fill="white" opacity="0.3"/>
+        <!-- Mast -->
+        <line x1="42" y1="10" x2="42" y2="26" stroke="white" stroke-width="2" opacity="0.7"/>
+        <line x1="36" y1="14" x2="48" y2="14" stroke="white" stroke-width="1.5" opacity="0.5"/>
+        <!-- Crane -->
+        <line x1="140" y1="40" x2="140" y2="70" stroke="white" stroke-width="2" opacity="0.6"/>
+        <line x1="130" y1="40" x2="155" y2="40" stroke="white" stroke-width="2" opacity="0.6"/>
+        <line x1="155" y1="40" x2="155" y2="55" stroke="white" stroke-width="1" opacity="0.4"/>
+        <!-- Antenna -->
+        <line x1="160" y1="55" x2="160" y2="70" stroke="white" stroke-width="1.5" opacity="0.5"/>
+        <circle cx="160" cy="53" r="2" fill="white" opacity="0.5"/>
+      </g>
+    </svg>
+  </div>
+</div>
+</body>
+</html>

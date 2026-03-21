@@ -17,7 +17,7 @@ interface Props {
 const { title, description, lang, canonicalPath, alternates, schema, ogImage } = Astro.props;
 const dir = isRTL(lang) ? 'rtl' : 'ltr';
 const canonicalURL = canonicalPath ? `https://www.tokkumanya.com${canonicalPath}` : Astro.url.href;
-const ogImg = ogImage ?? 'https://www.tokkumanya.com/logo/logo.png';
+const ogImg = ogImage ?? 'https://www.tokkumanya.com/images/og-preview.webp';
 ---
 <!DOCTYPE html>
 <html lang={langConfigs[lang].hreflang} dir={dir}>
