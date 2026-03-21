@@ -39,8 +39,8 @@
     text-rendering: optimizeSpeed;
   }
 
-  /* Ensure touch targets are min 48px */
-  a, button, select, input, textarea {
+  /* Ensure main touch targets are min 44px (not inline/nav) */
+  button, select, input, textarea {
     min-height: 44px;
   }
 
