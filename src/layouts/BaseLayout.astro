@@ -60,24 +60,22 @@ const ogImg = ogImage ?? `${SITE}/images/og-preview.webp`;
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
   <meta name="theme-color" content="#243880" />
 
-  <!-- Google Analytics (GA4) - Replace G-XXXXXXXXXX with your ID -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX" is:inline></script>
-  <script is:inline>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-XXXXXXXXXX');
-  </script>
-
   <!-- Google Search Console Verification - Replace with your code -->
-  <meta name="google-site-verification" content="YOUR_VERIFICATION_CODE" />
+  <!-- <meta name="google-site-verification" content="YOUR_VERIFICATION_CODE" /> -->
 
-  <!-- Preload fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <!-- Google Analytics - Uncomment and add your ID when ready -->
+  <!--
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-XXXXXXXXXX');</script>
+  -->
+
+  <!-- Fonts: System font stack first, Inter loaded async for progressive enhancement -->
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" media="print" onload="this.media='all'" />
-  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" /></noscript>
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800&display=swap" media="print" onload="this.media='all'" />
+
+  <!-- Preload hero image for LCP -->
+  <link rel="preload" as="image" href="/images/hero.webp" type="image/webp" />
 
   <!-- Schema.org -->
   {schema && <script type="application/ld+json" set:html={JSON.stringify(schema)} />}

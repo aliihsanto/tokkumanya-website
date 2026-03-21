@@ -36,6 +36,18 @@
   body {
     @apply bg-surface text-on-surface antialiased font-medium;
     font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+    text-rendering: optimizeSpeed;
+  }
+
+  /* Ensure touch targets are min 48px */
+  a, button, select, input, textarea {
+    min-height: 44px;
+  }
+
+  /* Accessibility: improve focus indicators */
+  :focus-visible {
+    outline: 2px solid #3D5099;
+    outline-offset: 2px;
   }
 
   [dir="rtl"] {
@@ -93,6 +105,12 @@
 
   .section-subtitle {
     @apply mt-4 text-lg text-on-surface-variant font-medium leading-relaxed;
+  }
+
+  /* Accessibility: boost contrast on dark backgrounds */
+  [style*="linear-gradient"] .text-white\/50,
+  [style*="linear-gradient"] .text-white\/55 {
+    color: rgba(255,255,255,0.75) !important;
   }
 
   .card {
