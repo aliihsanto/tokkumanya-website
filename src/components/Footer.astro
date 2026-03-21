@@ -1,14 +1,42 @@
 ---
 import { type Lang, t, slugs, LANGUAGES, langConfigs } from '@data/i18n';
 import { services } from '@data/services';
+import { ports } from '@data/ports';
+import { keywordPatterns } from '@data/keywords';
+
 interface Props { lang: Lang; }
 const { lang } = Astro.props;
 const footer = t(lang, 'footer');
 const nav = t(lang, 'nav');
+
+// Top ports for SEO links
+const topPorts = ['istanbul', 'izmir', 'mersin', 'samsun', 'trabzon', 'gemlik', 'aliaga', 'iskenderun', 'antalya', 'tekirdag'];
+const topPortData = topPorts.map(id => ports.find(p => p.id === id)).filter(Boolean);
 ---
 
 <footer class="bg-navy-950 text-gray-400">
-  <div class="container-narrow py-16 md:py-20">
+  <!-- SEO Internal Links Section -->
+  <div class="bg-navy-900/50">
+    <div class="container-narrow py-10">
+      <h3 class="label text-gray-500 mb-6">{lang === 'tr' ? 'POPÜLER LİMAN HİZMETLERİ' : lang === 'ru' ? 'ПОПУЛЯРНЫЕ ПОРТЫ' : lang === 'es' ? 'SERVICIOS PORTUARIOS POPULARES' : 'POPULAR PORT SERVICES'}</h3>
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-x-6 gap-y-2">
+        {topPortData.map(p => {
+          if (!p) return null;
+          const portName = p.names[lang];
+          return (<>
+            <a href={`/${lang}/${slugs.ports[lang]}/${p.id}/${slugs.serviceIds['food-provisions']?.[lang]}/`} class="text-xs font-medium text-gray-600 hover:text-white transition-colors truncate">{portName} {services[0].names[lang]}</a>
+            <a href={`/${lang}/${slugs.ports[lang]}/${p.id}/${slugs.serviceIds['fresh-produce']?.[lang]}/`} class="text-xs font-medium text-gray-600 hover:text-white transition-colors truncate">{portName} {services[1].names[lang]}</a>
+            <a href={`/${lang}/${slugs.ports[lang]}/${p.id}/${keywordPatterns[0].slugs[lang]}/`} class="text-xs font-medium text-gray-600 hover:text-white transition-colors truncate">{portName} {lang === 'tr' ? 'Kumanya' : 'Ship Supply'}</a>
+            <a href={`/${lang}/${slugs.ports[lang]}/${p.id}/${keywordPatterns[1].slugs[lang]}/`} class="text-xs font-medium text-gray-600 hover:text-white transition-colors truncate">{portName} {lang === 'tr' ? 'Gemi Tedarik' : 'Ship Chandler'}</a>
+            <a href={`/${lang}/${slugs.ports[lang]}/${p.id}/${keywordPatterns[5].slugs[lang]}/`} class="text-xs font-medium text-gray-600 hover:text-white transition-colors truncate">{portName} {lang === 'tr' ? 'Soğuk Zincir' : 'Cold Chain'}</a>
+          </>);
+        })}
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Footer -->
+  <div class="container-narrow py-14 md:py-16">
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-14">
       <!-- Brand -->
       <div class="lg:col-span-1">
@@ -23,27 +51,29 @@ const nav = t(lang, 'nav');
         </div>
       </div>
 
+      <!-- Quick Links -->
       <div>
         <h3 class="label text-gray-400 mb-5">{footer.quickLinks}</h3>
         <ul class="space-y-3">
           <li><a href={`/${lang}/`} class="text-sm font-medium text-gray-500 hover:text-white transition-all">{nav.home}</a></li>
           <li><a href={`/${lang}/${slugs.about[lang]}/`} class="text-sm font-medium text-gray-500 hover:text-white transition-all">{nav.about}</a></li>
           <li><a href={`/${lang}/${slugs.ports[lang]}/`} class="text-sm font-medium text-gray-500 hover:text-white transition-all">{nav.ports}</a></li>
+          <li><a href={`/${lang}/${slugs.references[lang]}/`} class="text-sm font-medium text-gray-500 hover:text-white transition-all">{lang === 'tr' ? 'Referanslar' : 'References'}</a></li>
           <li><a href={`/${lang}/${slugs.contact[lang]}/`} class="text-sm font-medium text-gray-500 hover:text-white transition-all">{nav.contact}</a></li>
         </ul>
       </div>
 
+      <!-- Services -->
       <div>
         <h3 class="label text-gray-400 mb-5">{footer.ourServices}</h3>
         <ul class="space-y-3">
           {services.map(s => (
-            <li>
-              <a href={`/${lang}/${slugs.services[lang]}/${slugs.serviceIds[s.id]?.[lang] ?? s.id}/`} class="text-sm font-medium text-gray-500 hover:text-white transition-all">{s.names[lang]}</a>
-            </li>
+            <li><a href={`/${lang}/${slugs.services[lang]}/${slugs.serviceIds[s.id]?.[lang] ?? s.id}/`} class="text-sm font-medium text-gray-500 hover:text-white transition-all">{s.names[lang]}</a></li>
           ))}
         </ul>
       </div>
 
+      <!-- Contact -->
       <div>
         <h3 class="label text-gray-400 mb-5">{footer.contactUs}</h3>
         <ul class="space-y-4">
@@ -57,7 +87,8 @@ const nav = t(lang, 'nav');
       </div>
     </div>
 
-    <div class="mt-14 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4" style="border-top: 1px solid rgba(197, 197, 210, 0.08);">
+    <!-- Bottom bar -->
+    <div class="mt-12 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4" style="border-top: 1px solid rgba(197, 197, 210, 0.06);">
       <p class="text-xs font-medium text-gray-600">&copy; {new Date().getFullYear()} Tok Ship Supply Co. {footer.rights}</p>
       <div class="flex items-center gap-1.5">
         {LANGUAGES.map(l => (

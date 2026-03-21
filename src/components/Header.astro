@@ -29,6 +29,7 @@ function getLangUrl(targetLang: Lang): string {
           { href: `/${lang}/${slugs.services[lang]}/`, label: nav.services },
           { href: `/${lang}/${slugs.ports[lang]}/`, label: nav.ports },
           { href: `/${lang}/${slugs.about[lang]}/`, label: nav.about },
+          { href: `/${lang}/${slugs.references[lang]}/`, label: lang === 'tr' ? 'Referanslar' : lang === 'ru' ? 'Партнёры' : lang === 'es' ? 'Referencias' : lang === 'ar' ? 'مراجع' : lang === 'fr' ? 'Références' : 'References' },
           { href: `/${lang}/${slugs.contact[lang]}/`, label: nav.contact },
         ].map(item => (
           <a href={item.href} class="px-4 py-2 text-sm font-semibold text-on-surface-variant hover:text-primary rounded-xl hover:bg-surface-container-low transition-all duration-200">{item.label}</a>
@@ -71,6 +72,7 @@ function getLangUrl(targetLang: Lang): string {
         { href: `/${lang}/${slugs.services[lang]}/`, label: nav.services },
         { href: `/${lang}/${slugs.ports[lang]}/`, label: nav.ports },
         { href: `/${lang}/${slugs.about[lang]}/`, label: nav.about },
+        { href: `/${lang}/${slugs.references[lang]}/`, label: lang === 'tr' ? 'Referanslar' : 'References' },
         { href: `/${lang}/${slugs.contact[lang]}/`, label: nav.contact },
       ].map(item => (
         <a href={item.href} class="block px-4 py-3 text-base font-semibold text-on-surface-variant rounded-xl hover:bg-surface-container-low hover:text-primary transition-all">{item.label}</a>
