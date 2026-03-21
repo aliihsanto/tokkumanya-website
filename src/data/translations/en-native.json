@@ -1,0 +1,199 @@
+{
+  "siteTitle": "Tok Ship Supply | Ship Chandlery & Vessel Provisioning in Turkey",
+  "siteDescription": "Full-service ship chandler delivering provisions, stores, and marine supplies to vessels at every Turkish port. Cold chain logistics, 20+ years in the trade, round-the-clock availability.",
+  "nav": {
+    "home": "Home",
+    "services": "Services",
+    "ports": "Ports",
+    "about": "About",
+    "contact": "Contact"
+  },
+  "hero": {
+    "title": "The Right Stores. Delivered on Time. Every Time.",
+    "subtitle": "Trusted ship chandler supplying provisions, deck stores, and marine equipment to vessels across all Turkish ports — with cold chain integrity and round-the-clock service.",
+    "cta": "Call Us Now",
+    "ctaWhatsapp": "Message Us on WhatsApp"
+  },
+  "services": {
+    "title": "What We Supply",
+    "subtitle": "End-to-end chandlery services covering every supply category your vessel needs — from galley provisions to deck stores.",
+    "viewAll": "Explore All Services",
+    "details": "Learn More"
+  },
+  "ports": {
+    "title": "Ports We Cover",
+    "subtitle": "Reliable ship supply services at 40+ ports along Turkey's entire coastline.",
+    "viewAll": "See All Ports",
+    "viewPort": "View Port Details",
+    "allPorts": "All Ports"
+  },
+  "about": {
+    "title": "About Us",
+    "subtitle": "Every Port. Every Vessel. Every Time.",
+    "p1": "Since 2005, Tok Ship Supply has been a trusted ship chandler operating across all Turkish ports. With more than two decades in the maritime supply trade, we deliver food provisions, cleaning stores, safety equipment, and technical supplies to both Turkish-flagged and international vessels.",
+    "p2": "Headquartered in Samsun, we maintain a dedicated fleet of refrigerated and dry-cargo vehicles that serve the full length of Turkey's coastline — from the Black Sea to the Mediterranean, and from the Aegean to the Sea of Marmara.",
+    "p3": "We built our reputation on doing two things well: sourcing quality products and getting them alongside on schedule. With over 28,000 successful deliveries to date, vessel operators and fleet managers count on us as a dependable supply partner.",
+    "years": "Years in the Trade",
+    "deliveries": "Successful Deliveries",
+    "portsCovered": "Ports Covered",
+    "available": "Round-the-Clock Service"
+  },
+  "whyUs": {
+    "title": "Why Ship Operators Choose Tok",
+    "subtitle": "The standards that set us apart in maritime provisioning.",
+    "items": [
+      {
+        "title": "Cold Chain Integrity",
+        "desc": "Our refrigerated fleet keeps perishable provisions at spec temperature from warehouse to vessel, so your galley receives stores in perfect condition."
+      },
+      {
+        "title": "24/7 Availability",
+        "desc": "Vessels don't run on office hours and neither do we. Our operations team is standing by day and night, seven days a week."
+      },
+      {
+        "title": "Complete Chandlery Range",
+        "desc": "Provisions, cabin stores, deck supplies, safety gear, and technical equipment — everything sourced and delivered from a single supplier."
+      },
+      {
+        "title": "On-Schedule Delivery",
+        "desc": "We plan around your vessel's port call and berth window, so stores arrive when you need them — not a minute late."
+      },
+      {
+        "title": "Competitive Pricing",
+        "desc": "Bulk purchasing power and lean operations let us offer sharp rates without cutting corners on quality."
+      },
+      {
+        "title": "Seasoned Team",
+        "desc": "Our crew has 20+ years of hands-on experience in maritime supply logistics — we know the trade inside and out."
+      }
+    ]
+  },
+  "contact": {
+    "title": "Get in Touch",
+    "subtitle": "Need a quote, have a question, or ready to place an order? Reach out — we respond fast.",
+    "name": "Full Name",
+    "email": "Email Address",
+    "phone": "Phone Number",
+    "vessel": "Vessel Name",
+    "port": "Port of Delivery",
+    "message": "Your Message",
+    "send": "Send Message",
+    "info": "Contact Details",
+    "address": "Address",
+    "addressValue": "Karasamsun Mah. Yıldıray Çınar Bulvarı 848. Sokak No:2/B, İlkadım, Samsun, Turkey",
+    "phoneLabel": "Phone",
+    "emailLabel": "Email",
+    "whatsappLabel": "WhatsApp",
+    "workingHours": "Hours of Operation",
+    "workingHoursValue": "24/7 — 365 Days a Year"
+  },
+  "faq": {
+    "title": "Frequently Asked Questions",
+    "items": [
+      {
+        "q": "Which ports do you deliver to?",
+        "a": "We supply vessels at more than 40 ports across Turkey, covering the Black Sea, Sea of Marmara, Aegean, and Mediterranean coasts."
+      },
+      {
+        "q": "How quickly can you deliver after an order is placed?",
+        "a": "In most cases we deliver within 24 hours of receiving a confirmed order. Turnaround depends on port location and stock availability, but we always aim to meet your vessel's schedule."
+      },
+      {
+        "q": "How do you handle cold chain provisions?",
+        "a": "All perishable stores travel in our own refrigerated vehicles at controlled temperatures. We maintain strict cold chain protocols from warehouse to quayside to ensure freshness and food safety."
+      },
+      {
+        "q": "Is there a minimum order value?",
+        "a": "No minimum order required. Whether it's a top-up for a short coastal run or a full provision for an ocean voyage, we're happy to supply."
+      },
+      {
+        "q": "Do you supply foreign-flagged vessels?",
+        "a": "Absolutely. We serve Turkish- and foreign-flagged vessels alike, with the same level of quality and service across the board."
+      },
+      {
+        "q": "What payment terms do you offer?",
+        "a": "We accept bank transfer, credit card, and cash. For established accounts and fleet operators, we also offer credit terms — just ask our team for details."
+      }
+    ]
+  },
+  "footer": {
+    "description": "Full-service ship chandler delivering provisions, stores, and marine supplies to vessels at every Turkish port.",
+    "quickLinks": "Quick Links",
+    "ourServices": "Our Services",
+    "contactUs": "Contact Us",
+    "rights": "All rights reserved.",
+    "followUs": "Follow Us"
+  },
+  "portPage": {
+    "metaTitle": "{port} Ship Supply & Chandlery | Tok Ship Supply",
+    "metaDesc": "Ship chandlery and vessel provisioning at {port}. Fresh provisions, cleaning stores, and safety equipment delivered with cold chain integrity. 24/7 service across the {region} region.",
+    "heroTitle": "Ship Supply at {port}",
+    "heroSubtitle": "Professional vessel provisioning and chandlery services at {port} — quality stores delivered alongside your vessel.",
+    "servicesTitle": "Services Available at {port}",
+    "nearbyTitle": "Nearby Ports",
+    "nearbySubtitle": "We also supply vessels at these ports near {port}.",
+    "ctaTitle": "Need Stores at {port}?",
+    "ctaSubtitle": "Get in touch now and we'll arrange delivery to match your vessel's schedule.",
+    "regionInfo": "Region",
+    "portLocation": "Port Location"
+  },
+  "servicePage": {
+    "metaTitle": "{service} for Vessels | Tok Ship Supply",
+    "metaDesc": "{service} delivered to vessels at all Turkish ports. Reliable quality, cold chain logistics, and 24/7 availability from an experienced ship chandler.",
+    "heroTitle": "{service}",
+    "heroSubtitle": "Dependable {service} for vessels calling at any Turkish port.",
+    "categoriesTitle": "Product Categories",
+    "portsTitle": "Ports Where This Service Is Available",
+    "ctaTitle": "Looking for {service}?",
+    "ctaSubtitle": "Contact our team now — we'll get your order moving."
+  },
+  "aboutPage": {
+    "metaTitle": "About Tok Ship Supply | Ship Chandler Since 2005",
+    "metaDesc": "Trusted ship chandler serving all Turkish ports since 2005. 28,000+ deliveries completed, 40+ ports covered, over 20 years of maritime supply expertise.",
+    "mission": "Our Mission",
+    "missionText": "To keep vessels provisioned and crews well-supplied by delivering the highest-quality stores — swiftly, reliably, and at competitive rates — at every Turkish port.",
+    "vision": "Our Vision",
+    "visionText": "To be Turkey's benchmark ship chandler, recognised industry-wide for international-standard service, operational reliability, and long-term partnership value.",
+    "values": "Our Values",
+    "valuesItems": [
+      "Reliability",
+      "Quality",
+      "Customer Focus",
+      "On-Time Delivery",
+      "Transparency",
+      "Sustainability"
+    ],
+    "fleet": "Our Fleet",
+    "fleetText": "Our dedicated fleet of refrigerated and dry-cargo vehicles ensures stores reach the quayside in perfect condition — regardless of distance or weather.",
+    "history": "Our History",
+    "historyText": "What began in 2005 as a small team in Samsun has grown into one of Turkey's most trusted ship supply operations, now serving vessels at more than 40 ports nationwide."
+  },
+  "contactPage": {
+    "metaTitle": "Contact Tok Ship Supply | 24/7 Ship Chandlery Orders",
+    "metaDesc": "Reach Tok Ship Supply for vessel provisioning orders, quote requests, and supply enquiries. Our team is available around the clock.",
+    "formTitle": "Send Us a Message",
+    "formSubtitle": "Tell us what you need — whether it's a quote, a question, or a rush order — and we'll get back to you promptly."
+  },
+  "portServicePage": {
+    "metaTitle": "{service} at {port} | Tok Ship Supply",
+    "metaDesc": "Professional {service} delivered to vessels at {port}. Cold chain guaranteed, 24/7 availability. Request a quote or place your order today.",
+    "heroTitle": "{service} at {port}",
+    "heroSubtitle": "{service} for vessels at {port} — premium products, on-schedule delivery, and competitive pricing.",
+    "availableProducts": "Available Products",
+    "whyChoose": "Why Choose Tok Ship Supply at {port}?",
+    "whyItems": [
+      "Purpose-built logistics for {port} with rapid quayside delivery",
+      "Cold chain fleet ensures perishable provisions arrive fresh",
+      "20+ years of operational experience in the {region} region",
+      "Service for all vessels — Turkish- and foreign-flagged",
+      "Round-the-clock ordering and delivery, 365 days a year",
+      "Competitive bulk pricing with wholesale advantages"
+    ],
+    "otherServices": "Other Services at {port}",
+    "orderNow": "Place Your Order",
+    "orderDesc": "Order {service} at {port} now — we'll deliver to your vessel's berth as fast as possible."
+  },
+  "breadcrumb": {
+    "home": "Home"
+  }
+}

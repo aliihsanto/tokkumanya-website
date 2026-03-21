@@ -1,0 +1,199 @@
+{
+  "siteTitle": "Tok Ship Supply | Ship Chandler & Avitaillement Maritime en Turquie",
+  "siteDescription": "Ship chandler de confiance dans tous les ports turcs. Avitaillement complet : provisions de bord, produits d'entretien, magasins de pont et salle des machines. Plus de 20 ans au service de la marine marchande, 24h/24 et 7j/7.",
+  "nav": {
+    "home": "Accueil",
+    "services": "Services",
+    "ports": "Ports",
+    "about": "Qui sommes-nous",
+    "contact": "Contact"
+  },
+  "hero": {
+    "title": "Votre navire approvisionné, à quai comme au mouillage",
+    "subtitle": "Avitaillement professionnel dans tous les ports turcs. Chaîne du froid certifiée, livraison bord à bord, 24h/24 et 7j/7 — même en escale courte.",
+    "cta": "Appelez maintenant",
+    "ctaWhatsapp": "Demandez un devis sur WhatsApp"
+  },
+  "services": {
+    "title": "Nos prestations d'avitaillement",
+    "subtitle": "De la cambuse à la salle des machines, nous couvrons l'ensemble des besoins de votre navire en un seul interlocuteur.",
+    "viewAll": "Découvrir toutes nos prestations",
+    "details": "En savoir plus"
+  },
+  "ports": {
+    "title": "Nos ports de livraison",
+    "subtitle": "Plus de 40 ports desservis sur l'ensemble du littoral turc — Mer Noire, Marmara, Egée et Méditerranée.",
+    "viewAll": "Voir tous les ports",
+    "viewPort": "Fiche du port",
+    "allPorts": "Tous les ports"
+  },
+  "about": {
+    "title": "Qui sommes-nous",
+    "subtitle": "Un ship chandler présent dans chaque port, à chaque escale",
+    "p1": "Depuis 2005, Tok Ship Supply assure l'avitaillement de navires de commerce et de pêche dans l'ensemble des ports turcs. Forts de plus de 20 ans d'expérience terrain, nous fournissons provisions de bord, produits d'entretien, équipements de sécurité du travail et fournitures techniques à tout type de bâtiment, quel que soit son pavillon.",
+    "p2": "Implantés à Samsun, nous disposons d'une flotte de véhicules frigorifiques et de transport sec qui nous permet de couvrir tout le littoral turc — de la Mer Noire à la Méditerranée, de l'Egée à la Marmara — dans les meilleurs délais.",
+    "p3": "Notre engagement : des produits de qualité, livrés dans les temps, à des tarifs compétitifs. Avec plus de 28 000 livraisons accomplies, nous sommes le partenaire de confiance sur lequel comptent armateurs et capitaines depuis deux décennies.",
+    "years": "ans d'expérience",
+    "deliveries": "livraisons réussies",
+    "portsCovered": "points de livraison",
+    "available": "service non-stop"
+  },
+  "whyUs": {
+    "title": "Pourquoi choisir Tok Ship Supply ?",
+    "subtitle": "Les armateurs et agents maritimes qui travaillent avec nous savent pourquoi ils reviennent.",
+    "items": [
+      {
+        "title": "Chaîne du froid garantie",
+        "desc": "Nos véhicules frigorifiques assurent le respect intégral de la chaîne du froid, de notre entrepôt jusqu'au bord du navire."
+      },
+      {
+        "title": "Disponibilité 24h/24, 7j/7",
+        "desc": "Escale de nuit, week-end, jour férié : notre équipe reste joignable et opérationnelle en permanence."
+      },
+      {
+        "title": "Un seul interlocuteur, tous les besoins",
+        "desc": "Provisions de bord, produits d'entretien, magasins de pont, équipements de sécurité et fournitures techniques — tout en une seule commande."
+      },
+      {
+        "title": "Ponctualité garantie",
+        "desc": "Nous calons nos livraisons sur le programme d'escale de votre navire. Pas de retard, pas de surprise."
+      },
+      {
+        "title": "Tarifs compétitifs",
+        "desc": "Des prix justes et transparents, sans compromis sur la qualité ni la fraîcheur des produits."
+      },
+      {
+        "title": "20 ans de métier",
+        "desc": "Une équipe de professionnels du maritime qui connaît les exigences du bord et les contraintes portuaires."
+      }
+    ]
+  },
+  "contact": {
+    "title": "Contactez-nous",
+    "subtitle": "Besoin d'un devis, d'une livraison urgente ou d'un renseignement ? Nous sommes à votre écoute.",
+    "name": "Nom et prénom",
+    "email": "Adresse e-mail",
+    "phone": "Numéro de téléphone",
+    "vessel": "Nom du navire",
+    "port": "Port d'escale",
+    "message": "Votre message",
+    "send": "Envoyer ma demande",
+    "info": "Coordonnées",
+    "address": "Adresse",
+    "addressValue": "Karasamsun Mah. Yıldıray Çınar Bulvarı 848. Sokak No:2/B İlkadım, SAMSUN — TURQUIE",
+    "phoneLabel": "Téléphone",
+    "emailLabel": "E-mail",
+    "whatsappLabel": "WhatsApp",
+    "workingHours": "Horaires",
+    "workingHoursValue": "24h/24 — 7j/7, tous les jours de l'année"
+  },
+  "faq": {
+    "title": "Questions fréquentes",
+    "items": [
+      {
+        "q": "Dans quels ports assurez-vous l'avitaillement ?",
+        "a": "Nous desservons plus de 40 ports répartis sur les quatre façades maritimes de la Turquie : Mer Noire, Marmara, Egée et Méditerranée."
+      },
+      {
+        "q": "Quel est votre délai de livraison ?",
+        "a": "En règle générale, la livraison est effectuée dans les 24 heures suivant la confirmation de commande, selon le port d'escale."
+      },
+      {
+        "q": "Comment garantissez-vous la chaîne du froid ?",
+        "a": "Nos véhicules frigorifiques maintiennent les produits frais à température contrôlée durant tout le transport, jusqu'à la livraison bord à bord."
+      },
+      {
+        "q": "Y a-t-il un minimum de commande ?",
+        "a": "Non, il n'y a aucun montant minimum. Nous traitons aussi bien les commandes ponctuelles que les contrats d'avitaillement réguliers."
+      },
+      {
+        "q": "Avitaillez-vous les navires sous pavillon étranger ?",
+        "a": "Absolument. Nous fournissons le même niveau de service à tous les navires, quel que soit leur pavillon — turc ou étranger."
+      },
+      {
+        "q": "Quelles sont vos modalités de paiement ?",
+        "a": "Nous acceptons le virement bancaire, la carte de crédit et le règlement en espèces. Des facilités de paiement à terme sont proposées à nos clients réguliers et comptes corporate."
+      }
+    ]
+  },
+  "footer": {
+    "description": "Ship chandler de confiance — avitaillement professionnel dans tous les ports turcs.",
+    "quickLinks": "Liens rapides",
+    "ourServices": "Nos prestations",
+    "contactUs": "Nous contacter",
+    "rights": "Tous droits réservés.",
+    "followUs": "Suivez-nous"
+  },
+  "portPage": {
+    "metaTitle": "Avitaillement maritime à {port} | Tok Ship Supply",
+    "metaDesc": "Ship chandler au port de {port}. Livraison de provisions de bord, produits d'entretien et équipements de sécurité en région {region}. Service 24h/24 avec chaîne du froid certifiée.",
+    "heroTitle": "Avitaillement au port de {port}",
+    "heroSubtitle": "Votre ship chandler au port de {port} : provisions, fournitures techniques et magasins de pont livrés bord à bord.",
+    "servicesTitle": "Nos prestations au port de {port}",
+    "nearbyTitle": "Ports à proximité",
+    "nearbySubtitle": "Nous assurons également l'avitaillement dans les ports voisins de {port}.",
+    "ctaTitle": "Besoin d'un avitaillement au port de {port} ?",
+    "ctaSubtitle": "Contactez-nous dès maintenant pour une livraison dans les meilleurs délais.",
+    "regionInfo": "Région",
+    "portLocation": "Localisation du port"
+  },
+  "servicePage": {
+    "metaTitle": "{service} | Tok Ship Supply",
+    "metaDesc": "Fourniture de {service} dans tous les ports turcs. Qualité professionnelle, chaîne du froid certifiée, service 24h/24 et 7j/7.",
+    "heroTitle": "{service}",
+    "heroSubtitle": "Approvisionnement en {service} pour tout type de navire, dans tous les ports de Turquie.",
+    "categoriesTitle": "Catégories de produits",
+    "portsTitle": "Ports desservis pour cette prestation",
+    "ctaTitle": "Besoin de {service} ?",
+    "ctaSubtitle": "Envoyez-nous votre liste — nous vous répondons sous 2 heures."
+  },
+  "aboutPage": {
+    "metaTitle": "Qui sommes-nous | Tok Ship Supply",
+    "metaDesc": "Ship chandler actif dans tous les ports turcs depuis 2005. Plus de 28 000 livraisons, 40+ ports desservis, 20+ ans d'expertise maritime.",
+    "mission": "Notre mission",
+    "missionText": "Garantir aux équipages et armateurs un avitaillement complet, rapide et fiable — des provisions de bord aux fournitures techniques — au meilleur rapport qualité-prix du marché.",
+    "vision": "Notre vision",
+    "visionText": "Devenir la référence incontournable de l'avitaillement maritime en Turquie, en alignant nos standards de service sur les meilleures pratiques internationales du ship chandling.",
+    "values": "Nos valeurs",
+    "valuesItems": [
+      "Fiabilité",
+      "Qualité",
+      "Satisfaction client",
+      "Ponctualité",
+      "Transparence",
+      "Développement durable"
+    ],
+    "fleet": "Notre flotte logistique",
+    "fleetText": "Véhicules frigorifiques et camions de fret sec : notre parc nous permet de livrer en toute sécurité, quelles que soient les conditions et la distance.",
+    "history": "Notre parcours",
+    "historyText": "Ce qui a commencé en 2005 à Samsun avec une poignée de passionnés du maritime est aujourd'hui une structure solide, présente dans plus de 40 ports à travers toute la Turquie."
+  },
+  "contactPage": {
+    "metaTitle": "Contact | Tok Ship Supply",
+    "metaDesc": "Joignez Tok Ship Supply pour vos commandes d'avitaillement, demandes de devis ou toute information. Service disponible 24h/24 et 7j/7.",
+    "formTitle": "Envoyez-nous votre demande",
+    "formSubtitle": "Décrivez votre besoin ou transmettez-nous votre liste de provisions — notre équipe vous recontacte dans les plus brefs délais."
+  },
+  "portServicePage": {
+    "metaTitle": "{service} au port de {port} | Tok Ship Supply",
+    "metaDesc": "Fourniture professionnelle de {service} au port de {port}. Chaîne du froid certifiée, livraison bord à bord, 24h/24.",
+    "heroTitle": "{service} — Port de {port}",
+    "heroSubtitle": "Livraison de {service} pour votre navire au port de {port}. Produits de qualité, délais tenus, tarifs compétitifs.",
+    "availableProducts": "Produits disponibles",
+    "whyChoose": "Pourquoi faire appel à Tok Ship Supply au port de {port} ?",
+    "whyItems": [
+      "Infrastructure logistique dédiée au port de {port} pour des livraisons rapides",
+      "Chaîne du froid intégrale grâce à notre flotte de véhicules frigorifiques",
+      "Plus de 20 ans de présence active dans la région de {region}",
+      "Tous pavillons acceptés — navires turcs et étrangers",
+      "Disponibilité permanente : commandes et livraisons 24h/24",
+      "Tarifs compétitifs et conditions avantageuses pour les commandes en volume"
+    ],
+    "otherServices": "Autres prestations au port de {port}",
+    "orderNow": "Passez commande maintenant",
+    "orderDesc": "Transmettez votre commande de {service} pour le port de {port} — livraison dans les meilleurs délais."
+  },
+  "breadcrumb": {
+    "home": "Accueil"
+  }
+}

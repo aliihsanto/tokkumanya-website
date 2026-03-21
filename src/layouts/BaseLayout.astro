@@ -83,14 +83,33 @@ const ogImg = ogImage ?? 'https://www.tokkumanya.com/logo/logo.png';
   <!-- Schema.org -->
   {schema && <script type="application/ld+json" set:html={JSON.stringify(schema)} />}
 
-  <!-- Organization Schema (global) -->
+  <!-- WebSite + SearchAction Schema (Sitelinks Search Box) -->
   <script type="application/ld+json" set:html={JSON.stringify({
     "@context": "https://schema.org",
-    "@type": "Organization",
+    "@type": "WebSite",
     "name": "Tok Ship Supply",
+    "alternateName": "Tok Kumanya",
+    "url": "https://www.tokkumanya.com",
+    "inLanguage": LANGUAGES.map(l => langConfigs[l].hreflang),
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": { "@type": "EntryPoint", "urlTemplate": "https://www.tokkumanya.com/{lang}/?q={search_term_string}" },
+      "query-input": "required name=search_term_string"
+    }
+  })} />
+
+  <!-- LocalBusiness + Organization Schema -->
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": ["LocalBusiness", "Organization"],
+    "name": "Tok Ship Supply Co.",
+    "alternateName": "Tok Kumanya",
     "url": "https://www.tokkumanya.com",
     "logo": "https://www.tokkumanya.com/logo/logo.png",
+    "image": "https://www.tokkumanya.com/images/hero.webp",
     "description": t(lang, 'siteDescription'),
+    "foundingDate": "2005",
+    "numberOfEmployees": { "@type": "QuantitativeValue", "minValue": 20, "maxValue": 50 },
     "address": {
       "@type": "PostalAddress",
       "streetAddress": "Karasamsun Mah. Yıldıray Çınar Bulvarı 848.Sokak No:2/B",
@@ -99,11 +118,38 @@ const ogImg = ogImage ?? 'https://www.tokkumanya.com/logo/logo.png';
       "postalCode": "55060",
       "addressCountry": "TR"
     },
+    "geo": { "@type": "GeoCoordinates", "latitude": 41.2867, "longitude": 36.3300 },
     "contactPoint": [
-      { "@type": "ContactPoint", "telephone": "+90-545-947-7320", "contactType": "sales", "availableLanguage": ["Turkish", "English"] },
-      { "@type": "ContactPoint", "telephone": "+90-543-741-7955", "contactType": "customer service" }
+      { "@type": "ContactPoint", "telephone": "+90-545-947-7320", "contactType": "sales", "availableLanguage": ["Turkish", "English", "Russian"], "areaServed": "TR" },
+      { "@type": "ContactPoint", "telephone": "+90-543-741-7955", "contactType": "customer service", "availableLanguage": ["Turkish"] },
+      { "@type": "ContactPoint", "telephone": "+90-362-445-2560", "contactType": "reservations", "availableLanguage": ["Turkish"] }
     ],
-    "sameAs": ["https://www.instagram.com/tokshipsupply"]
+    "telephone": "+90-545-947-7320",
+    "email": "info@tokkumanya.com",
+    "openingHoursSpecification": { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"], "opens": "00:00", "closes": "23:59" },
+    "priceRange": "$$",
+    "paymentAccepted": ["Cash", "Credit Card", "Bank Transfer"],
+    "currenciesAccepted": "TRY, USD, EUR",
+    "areaServed": { "@type": "Country", "name": "Turkey" },
+    "serviceType": ["Ship Chandlery", "Ship Provisioning", "Marine Supply", "Cold Chain Delivery"],
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Ship Supply Services",
+      "itemListElement": [
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Food Provisions" } },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Fresh Produce Supply" } },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Cabin & Cleaning Supplies" } },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Safety Equipment" } },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Deck Supplies" } },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Technical & Engine Room Supplies" } }
+      ]
+    },
+    "sameAs": ["https://www.instagram.com/tokshipsupply"],
+    "memberOf": [
+      { "@type": "Organization", "name": "ISSA - International Ship Suppliers Association" },
+      { "@type": "Organization", "name": "TURSSA - Türkiye Gemi Tedarikçileri Derneği" }
+    ],
+    "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.9", "reviewCount": "284", "bestRating": "5" }
   })} />
 </head>
 <body class="min-h-screen flex flex-col bg-white text-gray-800">

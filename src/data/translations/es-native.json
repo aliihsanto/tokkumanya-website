@@ -1,0 +1,199 @@
+{
+  "siteTitle": "Tok Ship Supply | Ship Chandler y Aprovisionamiento de Buques en Turquia",
+  "siteDescription": "Chandler maritimo con cobertura en todos los puertos de Turquia. Provisiones, suministros de cubierta, sala de maquinas y equipos de seguridad. Mas de 20 anos de experiencia, operativos 24/7.",
+  "nav": {
+    "home": "Inicio",
+    "services": "Servicios",
+    "ports": "Puertos",
+    "about": "Quienes Somos",
+    "contact": "Contacto"
+  },
+  "hero": {
+    "title": "Su Buque Abastecido. Sin Demoras.",
+    "subtitle": "Aprovisionamiento integral para buques en todos los puertos turcos. Cadena de frio certificada y operativa las 24 horas, los 365 dias del ano.",
+    "cta": "Solicite Cotizacion",
+    "ctaWhatsapp": "Escribanos por WhatsApp"
+  },
+  "services": {
+    "title": "Nuestros Servicios",
+    "subtitle": "Suministro completo para la operacion de su embarcacion: desde provisiones de boca hasta equipamiento tecnico y de seguridad.",
+    "viewAll": "Explorar Todos los Servicios",
+    "details": "Mas Informacion"
+  },
+  "ports": {
+    "title": "Puertos de Operacion",
+    "subtitle": "Presencia logistica en mas de 40 puertos a lo largo de toda la costa turca.",
+    "viewAll": "Consultar Todos los Puertos",
+    "viewPort": "Ver Detalle del Puerto",
+    "allPorts": "Todos los Puertos"
+  },
+  "about": {
+    "title": "Quienes Somos",
+    "subtitle": "En Cada Puerto, un Aliado de Confianza",
+    "p1": "Tok Ship Supply es un ship chandler con sede en Turquia que opera desde 2005 en el aprovisionamiento integral de buques. Con mas de dos decadas de trayectoria, abastecemos embarcaciones de bandera nacional y extranjera con provisiones alimentarias, productos de limpieza e higiene, equipos de seguridad laboral y suministros tecnicos para cubierta y sala de maquinas.",
+    "p2": "Desde nuestra base operativa en Samsun, desplegamos una red logistica que cubre toda la franja costera turca: del Mar Negro al Mediterraneo, del Egeo al Mar de Marmara. Contamos con flota propia de vehiculos refrigerados y de carga seca para garantizar la integridad de cada entrega.",
+    "p3": "La satisfaccion del cliente es el eje de nuestra operacion. Mas de 28.000 entregas exitosas nos avalan como un socio fiable y con capacidad de respuesta probada en el sector maritimo.",
+    "years": "Anos de Trayectoria",
+    "deliveries": "Entregas Completadas",
+    "portsCovered": "Puntos de Entrega",
+    "available": "Servicio Permanente"
+  },
+  "whyUs": {
+    "title": "Por Que Elegir Tok Ship Supply",
+    "subtitle": "El respaldo operativo que su flota necesita en aguas turcas.",
+    "items": [
+      {
+        "title": "Cadena de Frio Garantizada",
+        "desc": "Flota refrigerada propia que asegura la conservacion optima de frescos desde el almacen hasta la escala de su buque."
+      },
+      {
+        "title": "Disponibilidad 24/7",
+        "desc": "Operamos sin interrupciones: las 24 horas del dia, los 7 dias de la semana, los 365 dias del ano."
+      },
+      {
+        "title": "Catalogo Integral",
+        "desc": "Provisiones de boca, suministros de cubierta, material de sala de maquinas, productos de limpieza y equipos de seguridad. Todo desde un unico proveedor."
+      },
+      {
+        "title": "Puntualidad Garantizada",
+        "desc": "Entregas sincronizadas con el programa de escala portuaria de su buque. Cero retrasos."
+      },
+      {
+        "title": "Precios Competitivos",
+        "desc": "Tarifas ajustadas al mercado sin sacrificar la calidad ni el alcance del servicio."
+      },
+      {
+        "title": "Equipo con Experiencia",
+        "desc": "Profesionales del aprovisionamiento maritimo con mas de 20 anos de experiencia en el sector."
+      }
+    ]
+  },
+  "contact": {
+    "title": "Contacto",
+    "subtitle": "Estamos listos para atender su requerimiento. Contactenos ahora.",
+    "name": "Nombre y Apellido",
+    "email": "Correo Electronico",
+    "phone": "Telefono de Contacto",
+    "vessel": "Nombre del Buque",
+    "port": "Puerto de Escala",
+    "message": "Detalle su Requerimiento",
+    "send": "Enviar Solicitud",
+    "info": "Datos de Contacto",
+    "address": "Direccion",
+    "addressValue": "Karasamsun Mah. Yildiray Cinar Bulvari 848.Sokak No:2/B Ilkadim, SAMSUN, TURQUIA",
+    "phoneLabel": "Telefono",
+    "emailLabel": "Correo Electronico",
+    "whatsappLabel": "WhatsApp",
+    "workingHours": "Horario de Atencion",
+    "workingHoursValue": "24/7 - Todos los Dias"
+  },
+  "faq": {
+    "title": "Preguntas Frecuentes",
+    "items": [
+      {
+        "q": "En que puertos operan?",
+        "a": "Cubrimos mas de 40 puertos en las costas del Mar Negro, Marmara, Egeo y Mediterraneo de Turquia. Consulte la lista completa en nuestra seccion de puertos."
+      },
+      {
+        "q": "En cuanto tiempo recibo mi pedido a bordo?",
+        "a": "El tiempo estandar de entrega es de 24 horas desde la confirmacion del pedido, aunque puede variar segun la ubicacion del puerto y la disponibilidad de productos especificos."
+      },
+      {
+        "q": "Como garantizan la cadena de frio?",
+        "a": "Disponemos de vehiculos refrigerados propios con control de temperatura monitorizado. Los productos frescos y congelados viajan en condiciones higienicas optimas hasta el costado del buque."
+      },
+      {
+        "q": "Existe un pedido minimo?",
+        "a": "No exigimos monto minimo. Atendemos desde pedidos puntuales hasta contratos de aprovisionamiento recurrente para flotas completas."
+      },
+      {
+        "q": "Atienden buques de bandera extranjera?",
+        "a": "Por supuesto. Trabajamos con buques de cualquier bandera y registro. Nuestro equipo esta habituado a operar con tripulaciones y agentes internacionales."
+      },
+      {
+        "q": "Que formas de pago aceptan?",
+        "a": "Aceptamos transferencia bancaria, tarjeta de credito y pago en efectivo. Para clientes corporativos y gestores de flota ofrecemos condiciones de pago a plazos."
+      }
+    ]
+  },
+  "footer": {
+    "description": "Ship chandler de referencia en Turquia. Aprovisionamiento maritimo profesional en todos los puertos turcos.",
+    "quickLinks": "Accesos Rapidos",
+    "ourServices": "Servicios",
+    "contactUs": "Contactenos",
+    "rights": "Todos los derechos reservados.",
+    "followUs": "Siganos"
+  },
+  "portPage": {
+    "metaTitle": "Aprovisionamiento de Buques en {port} | Tok Ship Supply",
+    "metaDesc": "Ship chandler en el puerto de {port}. Provisiones, suministros de cubierta, equipos de seguridad y productos de limpieza con entrega directa al buque. Cadena de frio 24/7 en la region de {region}.",
+    "heroTitle": "Aprovisionamiento Maritimo en {port}",
+    "heroSubtitle": "Servicio integral de chandler para su buque en el puerto de {port}. Entrega directa al costado del barco.",
+    "servicesTitle": "Servicios Disponibles en {port}",
+    "nearbyTitle": "Puertos Proximos",
+    "nearbySubtitle": "Tambien operamos en estos puertos cercanos a {port}.",
+    "ctaTitle": "Necesita Aprovisionar su Buque en {port}?",
+    "ctaSubtitle": "Contactenos ahora y coordinamos la entrega en el menor tiempo posible.",
+    "regionInfo": "Region",
+    "portLocation": "Ubicacion del Puerto"
+  },
+  "servicePage": {
+    "metaTitle": "{service} | Tok Ship Supply",
+    "metaDesc": "{service} en todos los puertos de Turquia. Calidad profesional, cadena de frio garantizada y atencion 24/7.",
+    "heroTitle": "{service}",
+    "heroSubtitle": "{service} con cobertura en todos los puertos turcos. Calidad, rapidez y confianza.",
+    "categoriesTitle": "Categorias de Producto",
+    "portsTitle": "Puertos con este Servicio",
+    "ctaTitle": "Necesita {service}?",
+    "ctaSubtitle": "Solicite su cotizacion ahora y reciba su pedido en el menor plazo posible."
+  },
+  "aboutPage": {
+    "metaTitle": "Quienes Somos | Tok Ship Supply",
+    "metaDesc": "Ship chandler operando en todos los puertos de Turquia desde 2005. Mas de 28.000 entregas, 40+ puertos, dos decadas de experiencia maritima.",
+    "mission": "Nuestra Mision",
+    "missionText": "Abastecer a la flota maritima con productos de primera calidad, en los plazos mas cortos y a precios competitivos, cubriendo cada necesidad del buque y su tripulacion.",
+    "vision": "Nuestra Vision",
+    "visionText": "Consolidarnos como el ship chandler de referencia en Turquia, con estandares de servicio homologables a nivel internacional y reconocimiento en todo el Mediterraneo Oriental.",
+    "values": "Nuestros Valores",
+    "valuesItems": [
+      "Fiabilidad",
+      "Calidad",
+      "Orientacion al Cliente",
+      "Puntualidad",
+      "Transparencia",
+      "Sostenibilidad"
+    ],
+    "fleet": "Nuestra Flota de Reparto",
+    "fleetText": "Vehiculos refrigerados y de carga seca propios que garantizan entregas seguras y a temperatura controlada en cualquier condicion.",
+    "history": "Nuestra Trayectoria",
+    "historyText": "Lo que comenzo en 2005 en Samsun como un pequeno equipo de aprovisionamiento se ha convertido en una estructura solida con capacidad para operar en mas de 40 puertos de toda Turquia."
+  },
+  "contactPage": {
+    "metaTitle": "Contacto | Tok Ship Supply",
+    "metaDesc": "Contacte con Tok Ship Supply para pedidos de aprovisionamiento, solicitudes de cotizacion o cualquier consulta. Atencion 24/7.",
+    "formTitle": "Envie su Solicitud",
+    "formSubtitle": "Complete el formulario con los datos de su requerimiento y nuestro equipo le respondera a la brevedad."
+  },
+  "portServicePage": {
+    "metaTitle": "{service} en {port} | Tok Ship Supply",
+    "metaDesc": "{service} profesional en el puerto de {port}. Cadena de frio garantizada, atencion 24/7. Solicite su pedido ahora.",
+    "heroTitle": "{service} en {port}",
+    "heroSubtitle": "{service} para su buque en el puerto de {port}. Productos de calidad, entrega puntual y precios competitivos.",
+    "availableProducts": "Productos Disponibles",
+    "whyChoose": "Por Que Confiar en Tok Ship Supply en {port}?",
+    "whyItems": [
+      "Infraestructura logistica dedicada al puerto de {port} con tiempos de entrega optimizados",
+      "Frescura asegurada mediante flota refrigerada propia con control de temperatura",
+      "Mas de 20 anos de operacion continua en la region de {region}",
+      "Servicio a buques de cualquier bandera y registro",
+      "Atencion y entregas operativas las 24 horas, los 7 dias de la semana",
+      "Precios mayoristas competitivos y condiciones especiales para flotas"
+    ],
+    "otherServices": "Otros Servicios en {port}",
+    "orderNow": "Solicitar Ahora",
+    "orderDesc": "Realice su pedido de {service} en el puerto de {port} y recibalo en el menor tiempo posible."
+  },
+  "breadcrumb": {
+    "home": "Inicio"
+  }
+}

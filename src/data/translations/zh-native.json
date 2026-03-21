@@ -1,0 +1,192 @@
+{
+  "siteTitle": "Tok Ship Supply | 土耳其专业船舶供应商",
+  "siteDescription": "覆盖土耳其全境港口的一站式船舶物资供应服务。船用伙食、甲板用品、机舱物资、劳保器材，冷链直达，20余年行业深耕，24小时响应。",
+  "nav": {
+    "home": "首页",
+    "services": "供应范围",
+    "ports": "服务港口",
+    "about": "关于我们",
+    "contact": "联系我们"
+  },
+  "hero": {
+    "title": "品质到船，使命必达",
+    "subtitle": "土耳其全港覆盖的专业船舶供应服务商。全程冷链保障，24小时随时响应，让每一次靠港补给都安心无忧。",
+    "cta": "立即拨打电话",
+    "ctaWhatsapp": "WhatsApp在线咨询"
+  },
+  "services": {
+    "title": "供应范围",
+    "subtitle": "从伙食供应到甲板物资，从机舱备件到劳保器材，全品类船用物资一站式配齐。",
+    "viewAll": "查看全部服务",
+    "details": "了解详情"
+  },
+  "ports": {
+    "title": "服务港口",
+    "subtitle": "土耳其沿海40余座港口，均可安排专业配送。",
+    "viewAll": "查看全部港口",
+    "viewPort": "港口详情",
+    "allPorts": "全部港口"
+  },
+  "about": {
+    "title": "关于我们",
+    "subtitle": "港港有保障，时时可信赖",
+    "p1": "Tok Ship Supply自2005年起深耕土耳其船舶供应市场，至今已有20余年行业经验。公司为挂靠土耳其各港口的中外籍船舶提供船用伙食、清洁物料、劳保安全器材及机舱技术物资等全方位供应服务。",
+    "p2": "公司总部设于萨姆松港，拥有冷藏车队和干货运输车队，业务覆盖黑海、马尔马拉海、爱琴海及地中海沿岸全部港口，实现土耳其全海岸线无死角配送。",
+    "p3": "我们始终坚持'质量为本、交期为先'的服务理念，累计完成28,000余次成功配送，是众多船东和船舶管理公司在土耳其的首选合作伙伴。",
+    "years": "年行业经验",
+    "deliveries": "次成功配送",
+    "portsCovered": "个配送港口",
+    "available": "全天候响应"
+  },
+  "whyUs": {
+    "title": "为什么选择 Tok Ship Supply？",
+    "subtitle": "专注船舶供应20余年，用实力赢得每一位船东的信赖。",
+    "items": [
+      {
+        "title": "全程冷链配送",
+        "desc": "自有冷藏车队，生鲜果蔬、冷冻肉类从仓库到船舷全程温控，确保食材新鲜安全。"
+      },
+      {
+        "title": "24小时待命",
+        "desc": "无论白天黑夜、工作日或节假日，订单随时接、配送随时发。"
+      },
+      {
+        "title": "全品类一站采购",
+        "desc": "伙食、清洁用品、劳保器材、甲板用品、机舱物资，一个电话全部搞定，省心省力。"
+      },
+      {
+        "title": "准点交货",
+        "desc": "严格对接船期，按照靠泊计划精准配送，绝不耽误开航。"
+      },
+      {
+        "title": "价格透明实惠",
+        "desc": "产地直采、规模化运营，在保证品质的前提下为您节省每一分采购成本。"
+      },
+      {
+        "title": "20年专业团队",
+        "desc": "资深船供从业人员组成的专业团队，深谙船员需求，服务高效到位。"
+      }
+    ]
+  },
+  "contact": {
+    "title": "联系我们",
+    "subtitle": "如需询价或下单，欢迎随时联系我们的供应团队。",
+    "name": "联系人姓名",
+    "email": "电子邮箱",
+    "phone": "联系电话",
+    "vessel": "船名",
+    "port": "靠泊港口",
+    "message": "备注说明",
+    "send": "提交询价",
+    "info": "联系方式",
+    "address": "公司地址",
+    "addressValue": "Karasamsun Mah. Yıldıray Çınar Bulvarı 848.Sokak No:2/B İlkadım, SAMSUN, TURKEY",
+    "phoneLabel": "电话",
+    "emailLabel": "邮箱",
+    "whatsappLabel": "WhatsApp",
+    "workingHours": "服务时间",
+    "workingHoursValue": "全年无休 · 24小时在线"
+  },
+  "faq": {
+    "title": "常见问题",
+    "items": [
+      {
+        "q": "你们可以在土耳其哪些港口供船？",
+        "a": "我们覆盖土耳其黑海、马尔马拉海、爱琴海和地中海沿岸40余座港口，主要港口均可安排配送。"
+      },
+      {
+        "q": "下单后多久能送到船上？",
+        "a": "一般情况下，确认订单后24小时内即可完成配送，具体时效视港口位置和订单规模而定。"
+      },
+      {
+        "q": "生鲜和冷冻品如何保证运输质量？",
+        "a": "公司配备专业冷藏运输车辆，全程温控、卫生达标，确保冷链不断、品质不降。"
+      },
+      {
+        "q": "有起订量要求吗？",
+        "a": "没有最低起订量限制。无论大单小单，我们都会认真对待、按时交付。"
+      },
+      {
+        "q": "外籍船舶也能供应吗？",
+        "a": "当然可以。我们长期服务各国籍船舶，中外船东一视同仁，品质与服务标准完全一致。"
+      },
+      {
+        "q": "支持哪些结算方式？",
+        "a": "支持电汇（T/T）、信用卡及现金结算。长期合作客户可申请账期，具体条件欢迎来电洽谈。"
+      }
+    ]
+  },
+  "footer": {
+    "description": "土耳其全港覆盖的一站式船舶物资供应服务商。",
+    "quickLinks": "快速导航",
+    "ourServices": "供应范围",
+    "contactUs": "联系我们",
+    "rights": "版权所有",
+    "followUs": "关注我们"
+  },
+  "portPage": {
+    "metaTitle": "{port}船舶供应服务 | Tok Ship Supply",
+    "metaDesc": "{port}港专业船舶物资供应——伙食、清洁用品、劳保器材，{region}区域24小时冷链配送。",
+    "heroTitle": "{port}船舶供应服务",
+    "heroSubtitle": "为靠泊{port}的各类船舶提供全品类物资供应，品质可靠、交期有保障。",
+    "servicesTitle": "{port}可提供的供应项目",
+    "nearbyTitle": "周边港口",
+    "nearbySubtitle": "{port}附近我们同样提供配送服务的港口。",
+    "ctaTitle": "在{port}需要补给？",
+    "ctaSubtitle": "立即联系我们，第一时间安排配送上船。",
+    "regionInfo": "所在区域",
+    "portLocation": "港口位置"
+  },
+  "servicePage": {
+    "metaTitle": "{service} | Tok Ship Supply",
+    "metaDesc": "土耳其各港口均可提供{service}，专业品质，冷链保障，24小时响应。",
+    "heroTitle": "{service}",
+    "heroSubtitle": "覆盖土耳其全部港口的专业{service}供应服务。",
+    "categoriesTitle": "产品分类",
+    "portsTitle": "可供应此类物资的港口",
+    "ctaTitle": "需要{service}？",
+    "ctaSubtitle": "立即联系我们，快速安排配送。"
+  },
+  "aboutPage": {
+    "metaTitle": "关于我们 | Tok Ship Supply",
+    "metaDesc": "深耕土耳其船舶供应市场20余年，累计配送28,000+次，覆盖40+港口。",
+    "mission": "企业使命",
+    "missionText": "以最优的品质、最快的响应、最合理的价格，为远洋船舶和船员提供全方位、无遗漏的物资保障。",
+    "vision": "企业愿景",
+    "visionText": "立足土耳其，面向国际航线，打造符合国际标准的一流船舶供应服务品牌。",
+    "values": "核心价值观",
+    "valuesItems": ["诚信为本", "品质至上", "客户第一", "准时交付", "阳光经营", "绿色可持续"],
+    "fleet": "运输车队",
+    "fleetText": "自有冷藏车队和干货物流车辆，无论冷冻品还是常温物资，全程安全可控。",
+    "history": "发展历程",
+    "historyText": "2005年，我们从萨姆松港起步，凭借一支精干的小团队开始为靠港船舶提供补给。经过20年的稳步发展，如今已成长为覆盖土耳其40余座港口的专业船舶供应企业。"
+  },
+  "contactPage": {
+    "metaTitle": "联系我们 | Tok Ship Supply",
+    "metaDesc": "联系Tok Ship Supply，24小时接受船舶物资订单、询价及业务咨询。",
+    "formTitle": "在线留言",
+    "formSubtitle": "请填写以下信息，我们的供应团队将在最短时间内与您取得联系。"
+  },
+  "portServicePage": {
+    "metaTitle": "{port}{service} | Tok Ship Supply",
+    "metaDesc": "{port}港专业{service}供应，全程冷链，24小时响应，欢迎询价下单。",
+    "heroTitle": "{port} {service}",
+    "heroSubtitle": "为靠泊{port}的船舶提供专业{service}——优选货源、冷链直达、准时上船。",
+    "availableProducts": "可供产品",
+    "whyChoose": "为什么在{port}选择 Tok Ship Supply？",
+    "whyItems": [
+      "针对{port}港制定专属物流方案，保证快速配送上船",
+      "自有冷藏车队，生鲜冷冻品全程温控不断链",
+      "在{region}区域深耕20余年，港口资源丰富",
+      "中外籍船舶均可供应，服务无差别",
+      "24小时接单、随时配送，不误船期",
+      "产地直采价格透明，批量采购更优惠"
+    ],
+    "otherServices": "{port}其他供应服务",
+    "orderNow": "立即下单",
+    "orderDesc": "现在就为您在{port}的船舶下达{service}订单，我们将以最快速度安排配送。"
+  },
+  "breadcrumb": {
+    "home": "首页"
+  }
+}
