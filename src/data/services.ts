@@ -11,7 +11,7 @@ export const services: Service[] = [
   {
     id: 'food-provisions',
     icon: '🍎',
-    image: '/images/food.png',
+    image: '/images/food.webp',
     names: {
       tr: 'Gıda Kumanya',
       en: 'Food Provisions',
@@ -82,7 +82,7 @@ export const services: Service[] = [
   {
     id: 'fresh-produce',
     icon: '🥬',
-    image: '/images/food.png',
+    image: '/images/food.webp',
     names: {
       tr: 'Taze Meyve & Sebze',
       en: 'Fresh Produce',
@@ -134,7 +134,7 @@ export const services: Service[] = [
   {
     id: 'cabin-cleaning',
     icon: '🧹',
-    image: '/images/cleaning.png',
+    image: '/images/cleaning.webp',
     names: {
       tr: 'Kabin & Temizlik',
       en: 'Cabin & Cleaning',
@@ -188,7 +188,7 @@ export const services: Service[] = [
   {
     id: 'safety-equipment',
     icon: '🦺',
-    image: '/images/safety.png',
+    image: '/images/safety.webp',
     names: {
       tr: 'İş Güvenliği Ekipmanları',
       en: 'Safety Equipment',
@@ -244,7 +244,7 @@ export const services: Service[] = [
   {
     id: 'deck-supplies',
     icon: '⚓',
-    image: '/images/deck.png',
+    image: '/images/deck.webp',
     names: {
       tr: 'Güverte Malzemeleri',
       en: 'Deck Supplies',
@@ -294,7 +294,7 @@ export const services: Service[] = [
   {
     id: 'technical-supplies',
     icon: '🔧',
-    image: '/images/technical.png',
+    image: '/images/technical.webp',
     names: {
       tr: 'Teknik Malzeme',
       en: 'Technical Supplies',
