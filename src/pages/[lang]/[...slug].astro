@@ -6,6 +6,8 @@ import { services, getServiceById, type Service } from '@data/services';
 import { keywordPatterns, type KeywordPattern } from '@data/keywords';
 import { references, referenceTranslations } from '@data/references';
 
+const SITE = import.meta.env.SITE ?? '';
+
 type PageType = 'port' | 'port-list' | 'service' | 'service-list' | 'port-service' | 'port-keyword' | 'references' | 'about' | 'contact';
 interface PageData { type: PageType; port?: Port; service?: Service; keyword?: KeywordPattern; }
 
@@ -57,7 +59,7 @@ if (type === 'port' && pageData.port) {
   const p = pageData.port; const pn = p.names[lang]; const rn = regions[p.region]?.[lang] ?? '';
   title = tReplace(t(lang, 'portPage.metaTitle'), { port: pn }); description = tReplace(t(lang, 'portPage.metaDesc'), { port: pn, region: rn });
   canonicalPath = `/${lang}/${slugs.ports[lang]}/${p.id}/`; alternates = LANGUAGES.map(l => ({ lang: l as Lang, path: `/${l}/${slugs.ports[l]}/${p.id}/` }));
-  schema = { "@context":"https://schema.org","@type":"Service","name":title,"description":description,"provider":{"@type":"Organization","name":"Tok Ship Supply","url":"https://www.tokkumanya.com"},"areaServed":{"@type":"Place","name":pn,"geo":{"@type":"GeoCoordinates","latitude":p.lat,"longitude":p.lng}},"serviceType":"Ship Supply & Provisioning" };
+  schema = { "@context":"https://schema.org","@type":"Service","name":title,"description":description,"provider":{"@type":"Organization","name":"Tok Ship Supply","url":SITE},"areaServed":{"@type":"Place","name":pn,"geo":{"@type":"GeoCoordinates","latitude":p.lat,"longitude":p.lng}},"serviceType":"Ship Supply & Provisioning" };
 } else if (type === 'port-service' && pageData.port && pageData.service) {
   const p = pageData.port; const s = pageData.service; const pn = p.names[lang]; const sn = s.names[lang]; const rn = regions[p.region]?.[lang] ?? '';
   const ss = slugs.serviceIds[s.id]?.[lang] ?? s.id;
@@ -68,7 +70,7 @@ if (type === 'port' && pageData.port) {
   schema = {
     "@context":"https://schema.org","@type":"Service",
     "name": title, "description": description,
-    "provider":{"@type":"Organization","name":"Tok Ship Supply","url":"https://www.tokkumanya.com"},
+    "provider":{"@type":"Organization","name":"Tok Ship Supply","url":SITE},
     "areaServed":{"@type":"Place","name":pn,"geo":{"@type":"GeoCoordinates","latitude":p.lat,"longitude":p.lng}},
     "serviceType": sn, "category": sn
   };

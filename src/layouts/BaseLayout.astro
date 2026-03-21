@@ -16,8 +16,9 @@ interface Props {
 
 const { title, description, lang, canonicalPath, alternates, schema, ogImage } = Astro.props;
 const dir = isRTL(lang) ? 'rtl' : 'ltr';
-const canonicalURL = canonicalPath ? `https://www.tokkumanya.com${canonicalPath}` : Astro.url.href;
-const ogImg = ogImage ?? 'https://www.tokkumanya.com/images/og-preview.webp';
+const SITE = import.meta.env.SITE ?? Astro.site?.origin ?? '';
+const canonicalURL = canonicalPath ? `${SITE}${canonicalPath}` : Astro.url.href;
+const ogImg = ogImage ?? `${SITE}/images/og-preview.webp`;
 ---
 <!DOCTYPE html>
 <html lang={langConfigs[lang].hreflang} dir={dir}>
@@ -34,9 +35,9 @@ const ogImg = ogImage ?? 'https://www.tokkumanya.com/images/og-preview.webp';
 
   <!-- Hreflang -->
   {alternates?.map(alt => (
-    <link rel="alternate" hreflang={langConfigs[alt.lang].hreflang} href={`https://www.tokkumanya.com${alt.path}`} />
+    <link rel="alternate" hreflang={langConfigs[alt.lang].hreflang} href={`${SITE}${alt.path}`} />
   ))}
-  {alternates && <link rel="alternate" hreflang="x-default" href={`https://www.tokkumanya.com${alternates.find(a => a.lang === 'en')?.path ?? alternates[0]?.path}`} />}
+  {alternates && <link rel="alternate" hreflang="x-default" href={`${SITE}${alternates.find(a => a.lang === 'en')?.path ?? alternates[0]?.path}`} />}
 
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
@@ -87,11 +88,11 @@ const ogImg = ogImage ?? 'https://www.tokkumanya.com/images/og-preview.webp';
     "@type": "WebSite",
     "name": "Tok Ship Supply",
     "alternateName": "Tok Kumanya",
-    "url": "https://www.tokkumanya.com",
+    "url": SITE,
     "inLanguage": LANGUAGES.map(l => langConfigs[l].hreflang),
     "potentialAction": {
       "@type": "SearchAction",
-      "target": { "@type": "EntryPoint", "urlTemplate": "https://www.tokkumanya.com/{lang}/?q={search_term_string}" },
+      "target": { "@type": "EntryPoint", "urlTemplate": `${SITE}/{lang}/?q={search_term_string}` },
       "query-input": "required name=search_term_string"
     }
   })} />
@@ -102,9 +103,9 @@ const ogImg = ogImage ?? 'https://www.tokkumanya.com/images/og-preview.webp';
     "@type": ["LocalBusiness", "Organization"],
     "name": "Tok Ship Supply Co.",
     "alternateName": "Tok Kumanya",
-    "url": "https://www.tokkumanya.com",
-    "logo": "https://www.tokkumanya.com/logo/logo.png",
-    "image": "https://www.tokkumanya.com/images/hero.webp",
+    "url": SITE,
+    "logo": `${SITE}/logo/logo.png`,
+    "image": `${SITE}/images/hero.webp`,
     "description": t(lang, 'siteDescription'),
     "foundingDate": "2005",
     "numberOfEmployees": { "@type": "QuantitativeValue", "minValue": 20, "maxValue": 50 },
