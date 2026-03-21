@@ -1,0 +1,1003 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { LANGUAGES, type Lang, t, tReplace, slugs, langConfigs } from '@data/i18n';
+import { ports, regions, getPortBySlug, getPortsByRegion, getNearbyPorts, type Port } from '@data/ports';
+import { services, getServiceById, type Service } from '@data/services';
+import { keywordPatterns, type KeywordPattern } from '@data/keywords';
+import { references, referenceTranslations } from '@data/references';
+
+type PageType = 'port' | 'port-list' | 'service' | 'service-list' | 'port-service' | 'port-keyword' | 'references' | 'about' | 'contact';
+interface PageData { type: PageType; port?: Port; service?: Service; keyword?: KeywordPattern; }
+
+export function getStaticPaths() {
+  const paths: any[] = [];
+  for (const lang of LANGUAGES) {
+    paths.push({ params: { lang, slug: slugs.ports[lang] }, props: { lang, pageData: { type: 'port-list' } } });
+    for (const port of ports) {
+      paths.push({ params: { lang, slug: `${slugs.ports[lang]}/${port.id}` }, props: { lang, pageData: { type: 'port', port } } });
+      // Port + Service combo pages (programmatic SEO)
+      for (const service of services) {
+        const serviceSlug = slugs.serviceIds[service.id]?.[lang] ?? service.id;
+        paths.push({
+          params: { lang, slug: `${slugs.ports[lang]}/${port.id}/${serviceSlug}` },
+          props: { lang, pageData: { type: 'port-service', port, service } },
+        });
+      }
+    }
+    paths.push({ params: { lang, slug: slugs.services[lang] }, props: { lang, pageData: { type: 'service-list' } } });
+    for (const service of services) {
+      const serviceSlug = slugs.serviceIds[service.id]?.[lang] ?? service.id;
+      paths.push({ params: { lang, slug: `${slugs.services[lang]}/${serviceSlug}` }, props: { lang, pageData: { type: 'service', service } } });
+    }
+    // Keyword pages (port × keyword combos)
+    for (const port of ports) {
+      for (const kw of keywordPatterns) {
+        paths.push({
+          params: { lang, slug: `${slugs.ports[lang]}/${port.id}/${kw.slugs[lang]}` },
+          props: { lang, pageData: { type: 'port-keyword', port, keyword: kw } },
+        });
+      }
+    }
+    // References page
+    paths.push({ params: { lang, slug: slugs.references[lang] }, props: { lang, pageData: { type: 'references' } } });
+    paths.push({ params: { lang, slug: slugs.about[lang] }, props: { lang, pageData: { type: 'about' } } });
+    paths.push({ params: { lang, slug: slugs.contact[lang] }, props: { lang, pageData: { type: 'contact' } } });
+  }
+  return paths;
+}
+
+const { lang, pageData } = Astro.props as { lang: Lang; pageData: PageData };
+const { type } = pageData;
+
+let title = '', description = '', canonicalPath = '';
+let schema: any = undefined;
+let alternates: { lang: Lang; path: string }[] = [];
+
+if (type === 'port' && pageData.port) {
+  const p = pageData.port; const pn = p.names[lang]; const rn = regions[p.region]?.[lang] ?? '';
+  title = tReplace(t(lang, 'portPage.metaTitle'), { port: pn }); description = tReplace(t(lang, 'portPage.metaDesc'), { port: pn, region: rn });
+  canonicalPath = `/${lang}/${slugs.ports[lang]}/${p.id}/`; alternates = LANGUAGES.map(l => ({ lang: l as Lang, path: `/${l}/${slugs.ports[l]}/${p.id}/` }));
+  schema = { "@context":"https://schema.org","@type":"Service","name":title,"description":description,"provider":{"@type":"Organization","name":"Tok Ship Supply","url":"https://www.tokkumanya.com"},"areaServed":{"@type":"Place","name":pn,"geo":{"@type":"GeoCoordinates","latitude":p.lat,"longitude":p.lng}},"serviceType":"Ship Supply & Provisioning" };
+} else if (type === 'port-service' && pageData.port && pageData.service) {
+  const p = pageData.port; const s = pageData.service; const pn = p.names[lang]; const sn = s.names[lang]; const rn = regions[p.region]?.[lang] ?? '';
+  const ss = slugs.serviceIds[s.id]?.[lang] ?? s.id;
+  title = tReplace(t(lang, 'portServicePage.metaTitle'), { port: pn, service: sn });
+  description = tReplace(t(lang, 'portServicePage.metaDesc'), { port: pn, service: sn, region: rn });
+  canonicalPath = `/${lang}/${slugs.ports[lang]}/${p.id}/${ss}/`;
+  alternates = LANGUAGES.map(l => ({ lang: l as Lang, path: `/${l}/${slugs.ports[l]}/${p.id}/${slugs.serviceIds[s.id]?.[l] ?? s.id}/` }));
+  schema = {
+    "@context":"https://schema.org","@type":"Service",
+    "name": title, "description": description,
+    "provider":{"@type":"Organization","name":"Tok Ship Supply","url":"https://www.tokkumanya.com"},
+    "areaServed":{"@type":"Place","name":pn,"geo":{"@type":"GeoCoordinates","latitude":p.lat,"longitude":p.lng}},
+    "serviceType": sn, "category": sn
+  };
+} else if (type === 'port-list') {
+  title = `${t(lang, 'ports.allPorts')} | Tok Ship Supply`; description = t(lang, 'siteDescription');
+  canonicalPath = `/${lang}/${slugs.ports[lang]}/`; alternates = LANGUAGES.map(l => ({ lang: l as Lang, path: `/${l}/${slugs.ports[l]}/` }));
+} else if (type === 'service' && pageData.service) {
+  const s = pageData.service; const sn = s.names[lang]; const ss = slugs.serviceIds[s.id]?.[lang] ?? s.id;
+  title = tReplace(t(lang, 'servicePage.metaTitle'), { service: sn }); description = tReplace(t(lang, 'servicePage.metaDesc'), { service: sn });
+  canonicalPath = `/${lang}/${slugs.services[lang]}/${ss}/`; alternates = LANGUAGES.map(l => ({ lang: l as Lang, path: `/${l}/${slugs.services[l]}/${slugs.serviceIds[s.id]?.[l] ?? s.id}/` }));
+} else if (type === 'service-list') {
+  title = `${t(lang, 'nav.services')} | Tok Ship Supply`; description = t(lang, 'services.subtitle');
+  canonicalPath = `/${lang}/${slugs.services[lang]}/`; alternates = LANGUAGES.map(l => ({ lang: l as Lang, path: `/${l}/${slugs.services[l]}/` }));
+} else if (type === 'port-keyword' && pageData.port && pageData.keyword) {
+  const p = pageData.port; const kw = pageData.keyword; const pn = p.names[lang]; const rn = regions[p.region]?.[lang] ?? '';
+  title = tReplace(kw.titles[lang] ?? kw.titles.en, { port: pn, region: rn });
+  description = tReplace(kw.descriptions[lang] ?? kw.descriptions.en, { port: pn, region: rn });
+  canonicalPath = `/${lang}/${slugs.ports[lang]}/${p.id}/${kw.slugs[lang]}/`;
+  alternates = LANGUAGES.map(l => ({ lang: l as Lang, path: `/${l}/${slugs.ports[l]}/${p.id}/${kw.slugs[l]}/` }));
+  schema = { "@context":"https://schema.org","@type":"Service","name":title,"description":description,"provider":{"@type":"Organization","name":"Tok Ship Supply"},"areaServed":{"@type":"Place","name":pn} };
+} else if (type === 'references') {
+  title = referenceTranslations.metaTitle[lang]; description = referenceTranslations.metaDesc[lang];
+  canonicalPath = `/${lang}/${slugs.references[lang]}/`; alternates = LANGUAGES.map(l => ({ lang: l as Lang, path: `/${l}/${slugs.references[l]}/` }));
+} else if (type === 'about') {
+  title = t(lang, 'aboutPage.metaTitle'); description = t(lang, 'aboutPage.metaDesc');
+  canonicalPath = `/${lang}/${slugs.about[lang]}/`; alternates = LANGUAGES.map(l => ({ lang: l as Lang, path: `/${l}/${slugs.about[l]}/` }));
+} else if (type === 'contact') {
+  title = t(lang, 'contactPage.metaTitle'); description = t(lang, 'contactPage.metaDesc');
+  canonicalPath = `/${lang}/${slugs.contact[lang]}/`; alternates = LANGUAGES.map(l => ({ lang: l as Lang, path: `/${l}/${slugs.contact[l]}/` }));
+}
+
+const breadcrumbHome = t(lang, 'breadcrumb.home');
+const regionOrder = ['marmara', 'aegean', 'mediterranean', 'black-sea'];
+
+const serviceIconPaths = [
+  `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>`,
+  `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/>`,
+  `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>`,
+  `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8V4m0 4a4 4 0 110 8 4 4 0 010-8zm0 8v4m-4-4h8"/>`,
+  `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.573-1.066z"/><circle cx="12" cy="12" r="3"/>`,
+];
+---
+
+<BaseLayout title={title} description={description} lang={lang} canonicalPath={canonicalPath} alternates={alternates} schema={schema}>
+
+  <!-- Breadcrumb -->
+  <nav class="bg-surface-container-low" aria-label="Breadcrumb">
+    <div class="container-narrow py-3.5">
+      <ol class="flex items-center gap-2 text-sm font-medium text-on-surface-variant flex-wrap" itemscope itemtype="https://schema.org/BreadcrumbList">
+        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href={`/${lang}/`} class="hover:text-primary transition-colors" itemprop="item"><span itemprop="name">{breadcrumbHome}</span></a><meta itemprop="position" content="1" />
+        </li>
+        {(type === 'port' || type === 'port-list' || type === 'port-service') && (<><li class="text-outline/40">/</li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href={`/${lang}/${slugs.ports[lang]}/`} class="hover:text-primary transition-colors" itemprop="item"><span itemprop="name">{t(lang, 'nav.ports')}</span></a>
+          <meta itemprop="position" content="2" /></li></>)}
+        {type === 'port' && pageData.port && (<><li class="text-outline/40">/</li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><span class="text-on-surface font-semibold" itemprop="name">{pageData.port.names[lang]}</span><meta itemprop="position" content="3" /></li></>)}
+        {type === 'port-service' && pageData.port && pageData.service && (<>
+          <li class="text-outline/40">/</li>
+          <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+            <a href={`/${lang}/${slugs.ports[lang]}/${pageData.port.id}/`} class="hover:text-primary transition-colors" itemprop="item"><span itemprop="name">{pageData.port.names[lang]}</span></a>
+            <meta itemprop="position" content="3" />
+          </li>
+          <li class="text-outline/40">/</li>
+          <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+            <span class="text-on-surface font-semibold" itemprop="name">{pageData.service.names[lang]}</span>
+            <meta itemprop="position" content="4" />
+          </li>
+        </>)}
+        {(type === 'service' || type === 'service-list') && (<><li class="text-outline/40">/</li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          {type === 'service-list' ? <span class="text-on-surface font-semibold" itemprop="name">{t(lang, 'nav.services')}</span> : <a href={`/${lang}/${slugs.services[lang]}/`} class="hover:text-primary transition-colors" itemprop="item"><span itemprop="name">{t(lang, 'nav.services')}</span></a>}
+          <meta itemprop="position" content="2" /></li></>)}
+        {type === 'service' && pageData.service && (<><li class="text-outline/40">/</li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><span class="text-on-surface font-semibold" itemprop="name">{pageData.service.names[lang]}</span><meta itemprop="position" content="3" /></li></>)}
+        {type === 'port-keyword' && pageData.port && pageData.keyword && (<>
+          <li class="text-outline/40">/</li>
+          <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href={`/${lang}/${slugs.ports[lang]}/${pageData.port.id}/`} class="hover:text-primary transition-colors" itemprop="item"><span itemprop="name">{pageData.port.names[lang]}</span></a><meta itemprop="position" content="3" /></li>
+          <li class="text-outline/40">/</li>
+          <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><span class="text-on-surface font-semibold" itemprop="name">{tReplace(pageData.keyword.h1[lang] ?? '', { port: '' }).trim()}</span><meta itemprop="position" content="4" /></li>
+        </>)}
+        {type === 'references' && (<><li class="text-outline/40">/</li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><span class="text-on-surface font-semibold" itemprop="name">{referenceTranslations.title[lang]}</span><meta itemprop="position" content="2" /></li></>)}
+        {type === 'about' && (<><li class="text-outline/40">/</li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><span class="text-on-surface font-semibold" itemprop="name">{t(lang, 'nav.about')}</span><meta itemprop="position" content="2" /></li></>)}
+        {type === 'contact' && (<><li class="text-outline/40">/</li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><span class="text-on-surface font-semibold" itemprop="name">{t(lang, 'nav.contact')}</span><meta itemprop="position" content="2" /></li></>)}
+      </ol>
+    </div>
+  </nav>
+
+  <!-- ========== PORT PAGE ========== -->
+  {type === 'port' && pageData.port && (() => {
+    const port = pageData.port!; const portName = port.names[lang]; const regionName = regions[port.region]?.[lang] ?? '';
+    const pp = t(lang, 'portPage'); const nearby = getNearbyPorts(port.id);
+    return (<>
+      {/* Hero */}
+      <section class="relative overflow-hidden" style="background: linear-gradient(135deg, #1A2A60 0%, #243880 40%, #3D5099 100%);">
+        <div class="absolute inset-0 opacity-[0.04]" style="background-image: url('data:image/svg+xml,%3Csvg width=&quot;80&quot; height=&quot;80&quot; viewBox=&quot;0 0 80 80&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;%3E%3Cg fill=&quot;%23ffffff&quot;%3E%3Ccircle cx=&quot;40&quot; cy=&quot;40&quot; r=&quot;1.5&quot;/%3E%3C/g%3E%3C/svg%3E');"></div>
+        <div class="container-narrow relative py-16 md:py-24 lg:py-28">
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+            <div>
+              <span class="label-gold">{lang === 'tr' ? 'GÜVENİLİR GEMİ TEDARİK ORTAĞINIZ' : 'TRUSTED SHIP SUPPLY PARTNER'}</span>
+              <h1 class="mt-4 text-3xl md:text-4xl lg:text-5xl font-extrabold text-white leading-[1.1] tracking-tight">
+                {tReplace(pp.heroTitle, { port: portName })}<span class="text-gold-400">.</span>
+              </h1>
+              <p class="mt-5 text-base md:text-lg text-white/55 font-medium leading-relaxed max-w-lg">{tReplace(pp.heroSubtitle, { port: portName })}</p>
+              <div class="mt-8 flex flex-col sm:flex-row gap-3">
+                <a href="https://wa.me/905459477320" target="_blank" rel="noopener noreferrer" class="btn-whatsapp !py-3.5 !px-8">
+                  <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                  WhatsApp
+                </a>
+                <a href="tel:+905459477320" class="btn-gold !py-3.5 !px-8">+90 545 947 73 20</a>
+              </div>
+            </div>
+            <div class="hidden lg:block">
+              <div class="rounded-2xl overflow-hidden aspect-[4/3] bg-white/5 backdrop-blur-sm flex items-center justify-center">
+                <div class="text-center p-8">
+                  <div class="w-16 h-16 mx-auto rounded-2xl bg-gold-500/15 flex items-center justify-center mb-4">
+                    <svg class="w-8 h-8 text-gold-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                  </div>
+                  <p class="text-white/40 font-semibold text-sm">{pp.regionInfo}</p>
+                  <p class="text-white font-extrabold text-xl mt-1">{regionName}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="wave-divider"><svg viewBox="0 0 1440 60" preserveAspectRatio="none" class="w-full h-[40px] md:h-[60px] block" fill="#fcf8fb"><path d="M0 60h1440V20Q1080 60 720 40T0 50z"/></svg></div>
+      </section>
+
+      {/* Services at Port */}
+      <section class="py-20 md:py-28 bg-surface">
+        <div class="container-narrow">
+          <span class="label-gold">{lang === 'tr' ? 'LIMAN LOJİSTİĞİ VE TEDARİK' : 'PORT LOGISTICS & SUPPLY'}</span>
+          <h2 class="mt-3 section-title">{tReplace(pp.servicesTitle, { port: portName })}</h2>
+          <div class="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {services.map((s, i) => {
+              const sSlug = slugs.serviceIds[s.id]?.[lang] ?? s.id;
+              return (
+                <a href={`/${lang}/${slugs.ports[lang]}/${port.id}/${sSlug}/`}
+                   class="group rounded-xl bg-surface-container-lowest overflow-hidden transition-all duration-300 hover:shadow-ambient">
+                  <div class="aspect-[16/10] overflow-hidden">
+                    <img src={s.image} alt={`${portName} ${s.names[lang]}`} class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" width="400" height="250" loading="lazy" />
+                  </div>
+                  <div class="p-6">
+                    <h3 class="text-base font-extrabold text-on-surface group-hover:text-primary transition-colors">{s.names[lang]}</h3>
+                    <p class="mt-2 text-sm text-on-surface-variant font-medium leading-relaxed line-clamp-2">{s.descriptions[lang]}</p>
+                  </div>
+                </a>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* Nearby Ports */}
+      {nearby.length > 0 && (
+        <section class="py-20 md:py-28 bg-surface-container-low">
+          <div class="container-narrow">
+            <span class="label-gold">{lang === 'tr' ? 'YAKIN LİMANLAR' : 'NEARBY PORTS'}</span>
+            <h2 class="mt-3 section-title">{pp.nearbyTitle}</h2>
+            <p class="section-subtitle max-w-2xl">{tReplace(pp.nearbySubtitle, { port: portName })}</p>
+            <div class="mt-10 flex flex-wrap gap-3">
+              {nearby.map(np => (
+                <a href={`/${lang}/${slugs.ports[lang]}/${np.id}/`}
+                   class="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-surface-container-lowest text-sm font-semibold text-on-surface-variant hover:text-primary hover:shadow-ambient-sm transition-all duration-200">
+                  <svg class="w-4 h-4 text-ocean-500" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                  {np.names[lang]}
+                </a>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Contact Info + CTA */}
+      <section class="py-16 md:py-20 bg-surface">
+        <div class="container-narrow">
+          <div class="rounded-2xl p-10 md:p-14" style="background: linear-gradient(135deg, #1A2A60, #3D5099);">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+              <div>
+                <h2 class="text-2xl md:text-3xl font-extrabold text-white tracking-tight">{tReplace(pp.ctaTitle, { port: portName })}</h2>
+                <p class="mt-3 text-base text-white/50 font-medium">{pp.ctaSubtitle}</p>
+              </div>
+              <div class="flex flex-col sm:flex-row gap-3 lg:justify-end">
+                <a href="https://wa.me/905459477320" target="_blank" rel="noopener noreferrer" class="btn-whatsapp !py-3.5 !px-8">WhatsApp</a>
+                <a href="tel:+905459477320" class="btn-gold !py-3.5 !px-8">+90 545 947 73 20</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </>);
+  })()}
+
+  <!-- ========== PORT + SERVICE PAGE ========== -->
+  {type === 'port-service' && pageData.port && pageData.service && (() => {
+    const port = pageData.port!; const service = pageData.service!;
+    const portName = port.names[lang]; const serviceName = service.names[lang];
+    const regionName = regions[port.region]?.[lang] ?? '';
+    const ps = t(lang, 'portServicePage');
+    const nearby = getNearbyPorts(port.id);
+    const subcats = service.subcategories[lang] ?? [];
+    const otherServices = services.filter(s => s.id !== service.id);
+    const rep = { port: portName, service: serviceName, region: regionName };
+    return (<>
+      {/* Hero */}
+      <section class="relative overflow-hidden" style="background: linear-gradient(135deg, #1A2A60 0%, #243880 40%, #3D5099 100%);">
+        <div class="absolute inset-0 opacity-[0.04]" style="background-image: url('data:image/svg+xml,%3Csvg width=&quot;80&quot; height=&quot;80&quot; viewBox=&quot;0 0 80 80&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;%3E%3Cg fill=&quot;%23ffffff&quot;%3E%3Ccircle cx=&quot;40&quot; cy=&quot;40&quot; r=&quot;1.5&quot;/%3E%3C/g%3E%3C/svg%3E');"></div>
+        <div class="container-narrow relative py-16 md:py-24">
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+            <div>
+              <span class="label-gold">{portName} — {regionName}</span>
+              <h1 class="mt-4 text-3xl md:text-4xl lg:text-5xl font-extrabold text-white leading-[1.1] tracking-tight">
+                {tReplace(ps.heroTitle, rep)}<span class="text-gold-400">.</span>
+              </h1>
+              <p class="mt-5 text-base md:text-lg text-white/55 font-medium leading-relaxed max-w-lg">{tReplace(ps.heroSubtitle, rep)}</p>
+              <div class="mt-8 flex flex-col sm:flex-row gap-3">
+                <a href="https://wa.me/905459477320" target="_blank" rel="noopener noreferrer" class="btn-whatsapp !py-3.5 !px-8">
+                  <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                  WhatsApp
+                </a>
+                <a href="tel:+905459477320" class="btn-gold !py-3.5 !px-8">+90 545 947 73 20</a>
+              </div>
+            </div>
+            <div class="hidden lg:block">
+              <div class="rounded-2xl overflow-hidden aspect-[4/3] shadow-ambient-lg">
+                <img src={service.image} alt={`${portName} ${serviceName}`} class="w-full h-full object-cover" width="600" height="450" loading="eager" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="wave-divider"><svg viewBox="0 0 1440 60" preserveAspectRatio="none" class="w-full h-[40px] md:h-[60px] block" fill="#fcf8fb"><path d="M0 60h1440V20Q1080 60 720 40T0 50z"/></svg></div>
+      </section>
+
+      {/* Available Products */}
+      {subcats.length > 0 && (
+        <section class="py-20 md:py-28 bg-surface">
+          <div class="container-narrow">
+            <span class="label-gold">{lang === 'tr' ? 'ÜRÜN KATEGORİLERİ' : 'PRODUCT CATEGORIES'}</span>
+            <h2 class="mt-3 section-title">{ps.availableProducts}</h2>
+            <p class="section-subtitle max-w-2xl">{service.descriptions[lang]}</p>
+            <div class="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+              {subcats.map(cat => (
+                <div class="flex items-start gap-3 px-5 py-4 rounded-xl bg-surface-container-lowest">
+                  <div class="w-2 h-2 rounded-full bg-gold-500 flex-shrink-0 mt-1.5"></div>
+                  <span class="text-sm font-semibold text-on-surface">{cat}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Why Choose Us */}
+      <section class="py-20 md:py-28 bg-surface-container-low">
+        <div class="container-narrow">
+          <span class="label-gold">{lang === 'tr' ? 'NEDEN BİZ?' : 'WHY US'}</span>
+          <h2 class="mt-3 section-title">{tReplace(ps.whyChoose, rep)}</h2>
+          <div class="mt-10 grid grid-cols-1 md:grid-cols-2 gap-4">
+            {ps.whyItems.map((item: string, i: number) => (
+              <div class="flex items-start gap-4 rounded-xl bg-surface-container-lowest p-6">
+                <div class="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0" style="background: linear-gradient(135deg, #243880, #3D5099);">
+                  <svg class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                </div>
+                <span class="text-sm font-semibold text-on-surface leading-relaxed">{tReplace(item, rep)}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Other Services at Port */}
+      <section class="py-20 md:py-28 bg-surface">
+        <div class="container-narrow">
+          <span class="label-gold">{lang === 'tr' ? 'DİĞER HİZMETLER' : 'OTHER SERVICES'}</span>
+          <h2 class="mt-3 section-title">{tReplace(ps.otherServices, rep)}</h2>
+          <div class="mt-10 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+            {otherServices.map(os => {
+              const osSlug = slugs.serviceIds[os.id]?.[lang] ?? os.id;
+              return (
+                <a href={`/${lang}/${slugs.ports[lang]}/${port.id}/${osSlug}/`}
+                   class="rounded-xl bg-surface-container-lowest p-5 text-center transition-all duration-200 hover:shadow-ambient group">
+                  <div class="w-10 h-10 rounded-xl mx-auto mb-3 overflow-hidden">
+                    <img src={os.image} alt={os.names[lang]} class="w-full h-full object-cover" width="40" height="40" loading="lazy" />
+                  </div>
+                  <span class="text-xs font-extrabold text-on-surface group-hover:text-primary transition-colors">{os.names[lang]}</span>
+                </a>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* Nearby Ports */}
+      {nearby.length > 0 && (
+        <section class="py-16 bg-surface-container-low">
+          <div class="container-narrow">
+            <h3 class="text-lg font-extrabold text-on-surface mb-5">{t(lang, 'portPage.nearbyTitle')}</h3>
+            <div class="flex flex-wrap gap-2">
+              {nearby.map(np => {
+                const nsSlug = slugs.serviceIds[service.id]?.[lang] ?? service.id;
+                return (
+                  <a href={`/${lang}/${slugs.ports[lang]}/${np.id}/${nsSlug}/`}
+                     class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-surface-container-lowest text-sm font-semibold text-on-surface-variant hover:text-primary hover:shadow-ambient-sm transition-all">
+                    <svg class="w-3.5 h-3.5 text-ocean-500" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                    {np.names[lang]} {serviceName}
+                  </a>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* CTA */}
+      <section class="py-16 md:py-20 bg-surface">
+        <div class="container-narrow">
+          <div class="rounded-2xl p-10 md:p-14" style="background: linear-gradient(135deg, #1A2A60, #3D5099);">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+              <div>
+                <h2 class="text-2xl md:text-3xl font-extrabold text-white tracking-tight">{ps.orderNow}</h2>
+                <p class="mt-3 text-base text-white/50 font-medium">{tReplace(ps.orderDesc, rep)}</p>
+              </div>
+              <div class="flex flex-col sm:flex-row gap-3 lg:justify-end">
+                <a href="https://wa.me/905459477320" target="_blank" rel="noopener noreferrer" class="btn-whatsapp !py-3.5 !px-8">WhatsApp</a>
+                <a href="tel:+905459477320" class="btn-gold !py-3.5 !px-8">+90 545 947 73 20</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </>);
+  })()}
+
+  <!-- ========== PORT LIST ========== -->
+  {type === 'port-list' && (() => {
+    const prt = t(lang, 'ports');
+    const about = t(lang, 'about');
+    const regionGradients = {
+      'marmara': 'from-blue-600/85 to-indigo-900/90',
+      'aegean': 'from-cyan-500/85 to-blue-800/90',
+      'mediterranean': 'from-amber-500/80 to-orange-800/90',
+      'black-sea': 'from-slate-500/85 to-slate-900/90',
+    };
+    const regionEmojis = { 'marmara': '🌊', 'aegean': '☀️', 'mediterranean': '🏖️', 'black-sea': '⚓' };
+    return (<>
+      {/* Hero */}
+      <section class="relative overflow-hidden" style="background: linear-gradient(135deg, #1A2A60 0%, #243880 40%, #3D5099 100%);">
+        <div class="absolute inset-0 opacity-[0.04]" style="background-image: url('data:image/svg+xml,%3Csvg width=&quot;80&quot; height=&quot;80&quot; viewBox=&quot;0 0 80 80&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;%3E%3Cg fill=&quot;%23ffffff&quot;%3E%3Ccircle cx=&quot;40&quot; cy=&quot;40&quot; r=&quot;1.5&quot;/%3E%3C/g%3E%3C/svg%3E');"></div>
+        <div class="container-narrow relative py-20 md:py-28 lg:py-32">
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <span class="label-gold">{lang === 'tr' ? 'HİZMET ALANLARIMIZ' : lang === 'ru' ? 'НАША ГЕОГРАФИЯ' : lang === 'es' ? 'NUESTRO ALCANCE' : lang === 'ar' ? 'نطاق خدماتنا' : 'OUR REACH'}</span>
+              <h1 class="mt-4 text-4xl md:text-5xl lg:text-[3.5rem] font-extrabold text-white leading-[1.1] tracking-tight">{prt.title}<span class="text-gold-400">.</span></h1>
+              <p class="mt-6 text-lg text-white/55 font-medium leading-relaxed max-w-lg">{prt.subtitle}</p>
+              <!-- Stats mini -->
+              <div class="mt-10 grid grid-cols-3 gap-6">
+                <div><div class="text-3xl font-extrabold text-white">40+</div><div class="text-xs font-semibold text-white/40 uppercase tracking-label mt-1">{about.portsCovered}</div></div>
+                <div><div class="text-3xl font-extrabold text-white">4</div><div class="text-xs font-semibold text-white/40 uppercase tracking-label mt-1">{lang === 'tr' ? 'Deniz Bölgesi' : lang === 'ru' ? 'Моря' : lang === 'es' ? 'Regiones' : 'Sea Regions'}</div></div>
+                <div><div class="text-3xl font-extrabold text-white">24/7</div><div class="text-xs font-semibold text-white/40 uppercase tracking-label mt-1">{about.available}</div></div>
+              </div>
+            </div>
+            <div class="hidden lg:block">
+              <div class="relative rounded-2xl overflow-hidden aspect-[4/3] shadow-ambient-lg">
+                <img src="/images/port-generic.png" alt={prt.title} class="w-full h-full object-cover" width="800" height="600" loading="eager" />
+                <div class="absolute inset-0 bg-gradient-to-t from-primary/30 to-transparent"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="wave-divider"><svg viewBox="0 0 1440 60" preserveAspectRatio="none" class="w-full h-[40px] md:h-[60px] block" fill="#fcf8fb"><path d="M0 60h1440V20Q1080 60 720 40T0 50z"/></svg></div>
+      </section>
+
+      {/* Region Overview Cards */}
+      <section class="py-20 md:py-28 bg-surface">
+        <div class="container-narrow">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-20">
+            {regionOrder.map((regionKey) => {
+              const regionPorts = getPortsByRegion(regionKey);
+              if (!regionPorts.length) return null;
+              const gradient = regionGradients[regionKey] ?? 'from-gray-600/85 to-gray-900/90';
+              return (
+                <div class="rounded-2xl overflow-hidden relative group">
+                  <div class="absolute inset-0">
+                    <img src="/images/port-generic.png" alt="" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" />
+                    <div class={`absolute inset-0 bg-gradient-to-br ${gradient}`}></div>
+                  </div>
+                  <div class="relative p-8 md:p-10 min-h-[220px] flex flex-col justify-between">
+                    <div>
+                      <div class="flex items-center gap-3 mb-3">
+                        <span class="text-2xl">{regionEmojis[regionKey]}</span>
+                        <h2 class="text-xl md:text-2xl font-extrabold text-white">{regions[regionKey]?.[lang]}</h2>
+                      </div>
+                      <div class="text-4xl font-extrabold text-white/90 mb-1">{regionPorts.length}<span class="text-base font-semibold text-white/50 ml-2">{lang === 'tr' ? 'Liman' : lang === 'ru' ? 'Портов' : lang === 'es' ? 'Puertos' : 'Ports'}</span></div>
+                    </div>
+                    <div class="flex flex-wrap gap-1.5 mt-4">
+                      {regionPorts.slice(0, 6).map(p => (
+                        <a href={`/${lang}/${slugs.ports[lang]}/${p.id}/`}
+                           class="inline-block px-3 py-1.5 rounded-lg bg-white/10 backdrop-blur-sm text-xs font-semibold text-white/90 hover:bg-white/25 transition-all">
+                          {p.names[lang]}
+                        </a>
+                      ))}
+                      {regionPorts.length > 6 && (
+                        <span class="inline-block px-3 py-1.5 rounded-lg bg-white/5 text-xs font-semibold text-white/50">
+                          +{regionPorts.length - 6}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* All ports by region - detailed cards */}
+          {regionOrder.map(regionKey => {
+            const regionPorts = getPortsByRegion(regionKey);
+            if (!regionPorts.length) return null;
+            return (
+              <div class="mb-16" id={regionKey}>
+                <div class="flex items-center gap-3 mb-8">
+                  <span class="text-xl">{regionEmojis[regionKey]}</span>
+                  <h2 class="text-2xl font-extrabold text-on-surface">{regions[regionKey]?.[lang]}</h2>
+                  <span class="ml-auto label">{regionPorts.length} {lang === 'tr' ? 'Liman' : 'Ports'}</span>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                  {regionPorts.map(p => {
+                    const nearbyCount = p.nearbyPorts.length;
+                    return (
+                      <a href={`/${lang}/${slugs.ports[lang]}/${p.id}/`}
+                         class="group rounded-xl bg-surface-container-lowest overflow-hidden transition-all duration-300 hover:shadow-ambient">
+                        {/* Mini header with port image */}
+                        <div class="h-2" style={`background: linear-gradient(90deg, ${regionKey === 'marmara' ? '#3B82F6, #4F46E5' : regionKey === 'aegean' ? '#06B6D4, #2563EB' : regionKey === 'mediterranean' ? '#F59E0B, #EA580C' : '#64748B, #1E293B'});`}></div>
+                        <div class="p-6">
+                          <div class="flex items-start justify-between gap-3">
+                            <div class="flex items-start gap-3">
+                              <div class="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0" style="background: linear-gradient(135deg, #243880, #3D5099);">
+                                <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                              </div>
+                              <div>
+                                <h3 class="text-lg font-extrabold text-on-surface group-hover:text-primary transition-colors">{p.names[lang]}</h3>
+                                <p class="text-xs font-semibold text-on-surface-variant mt-0.5">{regions[p.region]?.[lang]}</p>
+                              </div>
+                            </div>
+                            <svg class="w-5 h-5 text-on-surface-variant/30 group-hover:text-primary group-hover:translate-x-1 transition-all flex-shrink-0 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                          </div>
+                          {/* Service tags */}
+                          <div class="mt-4 flex flex-wrap gap-1.5">
+                            {services.slice(0, 3).map(s => (
+                              <span class="text-[10px] font-semibold uppercase tracking-label bg-surface-container-low text-on-surface-variant px-2 py-1 rounded-md">{s.names[lang]}</span>
+                            ))}
+                            <span class="text-[10px] font-semibold uppercase tracking-label bg-surface-container-low text-on-surface-variant px-2 py-1 rounded-md">+{services.length - 3}</span>
+                          </div>
+                          {/* Footer info */}
+                          <div class="mt-4 pt-4 flex items-center justify-between" style="border-top: 1px solid rgba(197,197,210,0.1);">
+                            <span class="text-xs font-semibold text-on-surface-variant">{nearbyCount} {lang === 'tr' ? 'yakın liman' : lang === 'ru' ? 'ближ. портов' : 'nearby'}</span>
+                            <span class="text-xs font-semibold text-green-600 flex items-center gap-1">
+                              <span class="w-1.5 h-1.5 rounded-full bg-green-500"></span>
+                              24/7
+                            </span>
+                          </div>
+                        </div>
+                      </a>
+                    );
+                  })}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section class="py-16 md:py-20 bg-surface-container-low">
+        <div class="container-narrow">
+          <div class="rounded-2xl p-10 md:p-14 text-center" style="background: linear-gradient(135deg, #1A2A60, #3D5099);">
+            <h2 class="text-2xl md:text-3xl font-extrabold text-white tracking-tight">
+              {lang === 'tr' ? 'Hangi limanda hizmet istersiniz?' : lang === 'ru' ? 'В каком порту вам нужен сервис?' : lang === 'es' ? '¿En qué puerto necesita servicio?' : 'Which port do you need service at?'}
+            </h2>
+            <p class="mt-3 text-base text-white/50 font-medium max-w-lg mx-auto">{t(lang, 'contact.subtitle')}</p>
+            <div class="mt-8 flex flex-col sm:flex-row justify-center gap-3">
+              <a href={`/${lang}/${slugs.contact[lang]}/`} class="btn-gold text-base !py-4 !px-10">
+                {lang === 'tr' ? 'Teklif Alın' : lang === 'ru' ? 'Запросить цену' : lang === 'es' ? 'Solicitar Cotización' : 'Request a Quote'}
+              </a>
+              <a href="https://wa.me/905459477320" target="_blank" rel="noopener noreferrer" class="btn-whatsapp text-base !py-4 !px-10">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                WhatsApp
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </>);
+  })()}
+
+  <!-- ========== SERVICE PAGE ========== -->
+  {type === 'service' && pageData.service && (() => {
+    const s = pageData.service!; const sn = s.names[lang]; const sp = t(lang, 'servicePage');
+    const subcats = s.subcategories[lang] ?? [];
+    return (<>
+      <section class="relative overflow-hidden" style="background: linear-gradient(135deg, #1A2A60 0%, #243880 40%, #3D5099 100%);">
+        <div class="container-narrow relative py-16 md:py-24">
+          <span class="label-gold">{lang === 'tr' ? 'HİZMETLERİMİZ' : 'OUR SERVICES'}</span>
+          <h1 class="mt-3 text-3xl md:text-4xl lg:text-5xl font-extrabold text-white tracking-tight">{tReplace(sp.heroTitle, { service: sn })}<span class="text-gold-400">.</span></h1>
+          <p class="mt-4 text-lg text-white/55 font-medium max-w-2xl">{tReplace(sp.heroSubtitle, { service: sn })}</p>
+        </div>
+        <div class="wave-divider"><svg viewBox="0 0 1440 60" preserveAspectRatio="none" class="w-full h-[40px] md:h-[60px] block" fill="#fcf8fb"><path d="M0 60h1440V20Q1080 60 720 40T0 50z"/></svg></div>
+      </section>
+
+      <section class="py-20 md:py-28 bg-surface">
+        <div class="container-narrow">
+          <div class="max-w-3xl"><p class="text-lg text-on-surface-variant font-medium leading-relaxed">{s.descriptions[lang]}</p></div>
+          {subcats.length > 0 && (
+            <div class="mt-16">
+              <span class="label-gold">{lang === 'tr' ? 'ÜRÜN KATEGORİLERİ' : 'PRODUCT CATEGORIES'}</span>
+              <h2 class="mt-3 section-title">{sp.categoriesTitle}</h2>
+              <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+                {subcats.map(cat => (
+                  <div class="flex items-center gap-3 px-5 py-4 rounded-xl bg-surface-container-lowest">
+                    <div class="w-2 h-2 rounded-full bg-gold-500 flex-shrink-0"></div>
+                    <span class="text-sm font-semibold text-on-surface">{cat}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+          <div class="mt-20">
+            <span class="label-gold">{lang === 'tr' ? 'HİZMET NOKTALARIMIZ' : 'SERVICE LOCATIONS'}</span>
+            <h2 class="mt-3 section-title">{sp.portsTitle}</h2>
+            <div class="mt-10 space-y-8">
+              {regionOrder.map(regionKey => {
+                const rp = getPortsByRegion(regionKey); if (!rp.length) return null;
+                return (<div>
+                  <h3 class="text-base font-extrabold text-on-surface mb-3 flex items-center gap-3">
+                    <span class="w-8 h-[3px] bg-gold-500 rounded-full"></span>{regions[regionKey]?.[lang]}
+                  </h3>
+                  <div class="flex flex-wrap gap-2">
+                    {rp.map(p => (<a href={`/${lang}/${slugs.ports[lang]}/${p.id}/`} class="text-sm font-semibold text-on-surface-variant hover:text-primary px-3.5 py-2 rounded-xl hover:bg-surface-container-low transition-all">{p.names[lang]}</a>))}
+                  </div>
+                </div>);
+              })}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="py-16 md:py-20 bg-surface-container-low">
+        <div class="container-narrow">
+          <div class="rounded-2xl p-10 md:p-14 text-center" style="background: linear-gradient(135deg, #1A2A60, #3D5099);">
+            <h2 class="text-2xl md:text-3xl font-extrabold text-white tracking-tight">{tReplace(sp.ctaTitle, { service: sn })}</h2>
+            <p class="mt-3 text-base text-white/50 font-medium max-w-lg mx-auto">{sp.ctaSubtitle}</p>
+            <div class="mt-8 flex flex-col sm:flex-row justify-center gap-3">
+              <a href="https://wa.me/905459477320" target="_blank" rel="noopener noreferrer" class="btn-whatsapp !py-3.5 !px-8">WhatsApp</a>
+              <a href="tel:+905459477320" class="btn-gold !py-3.5 !px-8">+90 545 947 73 20</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </>);
+  })()}
+
+  <!-- ========== SERVICE LIST ========== -->
+  {type === 'service-list' && (() => {
+    const svc = t(lang, 'services');
+    const about = t(lang, 'about');
+    const serviceImages = ['food', 'fresh-produce', 'cleaning', 'safety', 'deck', 'technical'];
+    return (<>
+      {/* Hero */}
+      <section class="relative overflow-hidden" style="background: linear-gradient(135deg, #1A2A60 0%, #243880 40%, #3D5099 100%);">
+        <div class="absolute inset-0 opacity-[0.04]" style="background-image: url('data:image/svg+xml,%3Csvg width=&quot;80&quot; height=&quot;80&quot; viewBox=&quot;0 0 80 80&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;%3E%3Cg fill=&quot;%23ffffff&quot;%3E%3Ccircle cx=&quot;40&quot; cy=&quot;40&quot; r=&quot;1.5&quot;/%3E%3C/g%3E%3C/svg%3E');"></div>
+        <div class="container-narrow relative py-20 md:py-28 lg:py-32">
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <span class="label-gold">{lang === 'tr' ? 'HİZMETLERİMİZ' : lang === 'ru' ? 'НАШИ УСЛУГИ' : lang === 'es' ? 'NUESTROS SERVICIOS' : 'OUR SERVICES'}</span>
+              <h1 class="mt-4 text-4xl md:text-5xl lg:text-[3.5rem] font-extrabold text-white leading-[1.1] tracking-tight">{svc.title}<span class="text-gold-400">.</span></h1>
+              <p class="mt-6 text-lg text-white/55 font-medium leading-relaxed max-w-lg">{svc.subtitle}</p>
+              <div class="mt-10 grid grid-cols-3 gap-6">
+                <div><div class="text-3xl font-extrabold text-white">{services.length}</div><div class="text-xs font-semibold text-white/40 uppercase tracking-label mt-1">{lang === 'tr' ? 'Hizmet Kategorisi' : 'Service Categories'}</div></div>
+                <div><div class="text-3xl font-extrabold text-white">40+</div><div class="text-xs font-semibold text-white/40 uppercase tracking-label mt-1">{about.portsCovered}</div></div>
+                <div><div class="text-3xl font-extrabold text-white">24/7</div><div class="text-xs font-semibold text-white/40 uppercase tracking-label mt-1">{about.available}</div></div>
+              </div>
+            </div>
+            <div class="hidden lg:block">
+              <div class="relative rounded-2xl overflow-hidden aspect-[4/3] shadow-ambient-lg">
+                <img src="/images/fleet.png" alt={svc.title} class="w-full h-full object-cover" width="800" height="600" loading="eager" />
+                <div class="absolute inset-0 bg-gradient-to-t from-primary/30 to-transparent"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="wave-divider"><svg viewBox="0 0 1440 60" preserveAspectRatio="none" class="w-full h-[40px] md:h-[60px] block" fill="#fcf8fb"><path d="M0 60h1440V20Q1080 60 720 40T0 50z"/></svg></div>
+      </section>
+
+      {/* Services - alternating layout */}
+      <section class="bg-surface">
+        {services.map((s, i) => {
+          const isEven = i % 2 === 0;
+          const subcats = s.subcategories[lang] ?? [];
+          const sSlug = slugs.serviceIds[s.id]?.[lang] ?? s.id;
+          return (
+            <div class={`py-16 md:py-24 ${isEven ? 'bg-surface' : 'bg-surface-container-low'}`}>
+              <div class="container-narrow">
+                <div class={`grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-16 items-center ${!isEven ? 'lg:[direction:rtl] lg:[&>*]:[direction:ltr]' : ''}`}>
+                  {/* Image */}
+                  <div class="relative">
+                    <div class="rounded-2xl overflow-hidden aspect-[4/3] shadow-ambient-lg">
+                      <img src={`/images/${serviceImages[i]}.png`} alt={s.names[lang]} class="w-full h-full object-cover" width="600" height="450" loading="lazy" />
+                    </div>
+                    {/* Floating service count badge */}
+                    <div class={`absolute -bottom-4 ${isEven ? '-right-4 md:right-6' : '-left-4 md:left-6'} glass rounded-xl px-5 py-3 shadow-ambient`}>
+                      <div class="text-2xl font-extrabold text-primary">{subcats.length}</div>
+                      <div class="text-[10px] font-semibold text-on-surface-variant uppercase tracking-label">{lang === 'tr' ? 'Alt Kategori' : 'Categories'}</div>
+                    </div>
+                  </div>
+
+                  {/* Content */}
+                  <div>
+                    <span class="label-gold">{String(i + 1).padStart(2, '0')} / {String(services.length).padStart(2, '0')}</span>
+                    <h2 class="mt-3 text-2xl md:text-3xl font-extrabold text-on-surface tracking-tight">{s.names[lang]}</h2>
+                    <p class="mt-4 text-base text-on-surface-variant font-medium leading-relaxed">{s.descriptions[lang]}</p>
+
+                    {/* Subcategory chips - first 6 */}
+                    <div class="mt-8 flex flex-wrap gap-2">
+                      {subcats.slice(0, 6).map(cat => {
+                        const shortName = cat.includes('(') ? cat.split('(')[0].trim() : cat;
+                        return (
+                          <span class="px-3.5 py-2 rounded-xl bg-surface-container-lowest text-xs font-semibold text-on-surface">{shortName}</span>
+                        );
+                      })}
+                      {subcats.length > 6 && (
+                        <span class="px-3.5 py-2 rounded-xl bg-surface-container-high text-xs font-semibold text-on-surface-variant">+{subcats.length - 6} {lang === 'tr' ? 'daha' : 'more'}</span>
+                      )}
+                    </div>
+
+                    <a href={`/${lang}/${slugs.services[lang]}/${sSlug}/`} class="btn-primary mt-8 !py-3.5">
+                      {svc.details}
+                      <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </section>
+
+      {/* CTA */}
+      <section class="py-16 md:py-20 bg-surface-container-low">
+        <div class="container-narrow">
+          <div class="rounded-2xl p-10 md:p-14 text-center" style="background: linear-gradient(135deg, #1A2A60, #3D5099);">
+            <h2 class="text-2xl md:text-3xl font-extrabold text-white tracking-tight">
+              {lang === 'tr' ? 'İhtiyacınız olan ürünü bulamadınız mı?' : lang === 'ru' ? 'Не нашли нужный продукт?' : lang === 'es' ? '¿No encontró lo que necesita?' : 'Can\'t find what you need?'}
+            </h2>
+            <p class="mt-3 text-base text-white/50 font-medium max-w-lg mx-auto">
+              {lang === 'tr' ? 'Listemizde olmayan ürünler için de tedarik sağlayabiliyoruz. Bize ulaşın, çözüm bulalım.' : 'We can also supply products not listed here. Contact us and we will find a solution.'}
+            </p>
+            <div class="mt-8 flex flex-col sm:flex-row justify-center gap-3">
+              <a href={`/${lang}/${slugs.contact[lang]}/`} class="btn-gold text-base !py-4 !px-10">
+                {lang === 'tr' ? 'Teklif Alın' : lang === 'ru' ? 'Запросить цену' : lang === 'es' ? 'Solicitar Cotización' : 'Request a Quote'}
+              </a>
+              <a href="https://wa.me/905459477320" target="_blank" rel="noopener noreferrer" class="btn-whatsapp text-base !py-4 !px-10">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                WhatsApp
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </>);
+  })()}
+
+  <!-- ========== PORT + KEYWORD PAGE ========== -->
+  {type === 'port-keyword' && pageData.port && pageData.keyword && (() => {
+    const port = pageData.port!; const kw = pageData.keyword!;
+    const portName = port.names[lang]; const regionName = regions[port.region]?.[lang] ?? '';
+    const rep = { port: portName, region: regionName };
+    const nearby = getNearbyPorts(port.id);
+    return (<>
+      <section class="relative overflow-hidden" style="background: linear-gradient(135deg, #1A2A60 0%, #243880 40%, #3D5099 100%);">
+        <div class="absolute inset-0 opacity-[0.04]" style="background-image: url('data:image/svg+xml,%3Csvg width=&quot;80&quot; height=&quot;80&quot; viewBox=&quot;0 0 80 80&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;%3E%3Cg fill=&quot;%23ffffff&quot;%3E%3Ccircle cx=&quot;40&quot; cy=&quot;40&quot; r=&quot;1.5&quot;/%3E%3C/g%3E%3C/svg%3E');"></div>
+        <div class="container-narrow relative py-16 md:py-24">
+          <span class="label-gold">{portName} — {regionName}</span>
+          <h1 class="mt-4 text-3xl md:text-4xl lg:text-5xl font-extrabold text-white leading-[1.1] tracking-tight">{tReplace(kw.h1[lang] ?? '', rep)}<span class="text-gold-400">.</span></h1>
+          <p class="mt-5 text-base md:text-lg text-white/55 font-medium leading-relaxed max-w-2xl">{tReplace(kw.content[lang] ?? '', rep)}</p>
+          <div class="mt-8 flex flex-col sm:flex-row gap-3">
+            <a href="https://wa.me/905459477320" target="_blank" rel="noopener noreferrer" class="btn-whatsapp !py-3.5 !px-8">WhatsApp</a>
+            <a href="tel:+905459477320" class="btn-gold !py-3.5 !px-8">+90 545 947 73 20</a>
+          </div>
+        </div>
+        <div class="wave-divider"><svg viewBox="0 0 1440 60" preserveAspectRatio="none" class="w-full h-[40px] md:h-[60px] block" fill="#fcf8fb"><path d="M0 60h1440V20Q1080 60 720 40T0 50z"/></svg></div>
+      </section>
+
+      <section class="py-20 md:py-28 bg-surface">
+        <div class="container-narrow">
+          <span class="label-gold">{lang === 'tr' ? 'HİZMETLERİMİZ' : 'OUR SERVICES'}</span>
+          <h2 class="mt-3 section-title">{tReplace(t(lang, 'portPage.servicesTitle'), rep)}</h2>
+          <div class="mt-10 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+            {services.map(s => {
+              const sSlug = slugs.serviceIds[s.id]?.[lang] ?? s.id;
+              return (
+                <a href={`/${lang}/${slugs.ports[lang]}/${port.id}/${sSlug}/`} class="rounded-xl bg-surface-container-lowest p-5 text-center transition-all hover:shadow-ambient group">
+                  <div class="w-12 h-12 rounded-xl mx-auto mb-3 overflow-hidden"><img src={s.image} alt={s.names[lang]} class="w-full h-full object-cover" loading="lazy" /></div>
+                  <span class="text-xs font-extrabold text-on-surface group-hover:text-primary transition-colors">{s.names[lang]}</span>
+                </a>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {nearby.length > 0 && (
+        <section class="py-16 bg-surface-container-low">
+          <div class="container-narrow">
+            <h3 class="text-lg font-extrabold text-on-surface mb-5">{t(lang, 'portPage.nearbyTitle')}</h3>
+            <div class="flex flex-wrap gap-2">
+              {nearby.map(np => (
+                <a href={`/${lang}/${slugs.ports[lang]}/${np.id}/${kw.slugs[lang]}/`} class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-surface-container-lowest text-sm font-semibold text-on-surface-variant hover:text-primary transition-all">
+                  <svg class="w-3.5 h-3.5 text-ocean-500" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                  {np.names[lang]}
+                </a>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      <section class="py-16 bg-surface">
+        <div class="container-narrow">
+          <div class="rounded-2xl p-10 md:p-14" style="background: linear-gradient(135deg, #1A2A60, #3D5099);">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+              <div><h2 class="text-2xl font-extrabold text-white">{lang === 'tr' ? 'Hemen Sipariş Verin' : 'Order Now'}</h2><p class="mt-2 text-white/50 font-medium">{t(lang, 'contact.subtitle')}</p></div>
+              <div class="flex flex-col sm:flex-row gap-3 lg:justify-end">
+                <a href="https://wa.me/905459477320" target="_blank" rel="noopener noreferrer" class="btn-whatsapp !py-3.5 !px-8">WhatsApp</a>
+                <a href="tel:+905459477320" class="btn-gold !py-3.5 !px-8">+90 545 947 73 20</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </>);
+  })()}
+
+  <!-- ========== REFERENCES PAGE ========== -->
+  {type === 'references' && (() => {
+    const rt = referenceTranslations;
+    const byType = (t: string) => references.filter(r => r.type === t);
+    const countryFlags = { TR:'🇹🇷',CH:'🇨🇭',FR:'🇫🇷',DK:'🇩🇰',DE:'🇩🇪',TW:'🇹🇼',CN:'🇨🇳',SG:'🇸🇬',RU:'🇷🇺',GR:'🇬🇷',NO:'🇳🇴',HK:'🇭🇰',GB:'🇬🇧',AE:'🇦🇪' };
+    return (<>
+      <section class="relative overflow-hidden" style="background: linear-gradient(135deg, #1A2A60 0%, #243880 40%, #3D5099 100%);">
+        <div class="container-narrow relative py-20 md:py-28">
+          <span class="label-gold">{lang === 'tr' ? 'İŞ ORTAKLARIMIZ' : 'OUR PARTNERS'}</span>
+          <h1 class="mt-4 text-4xl md:text-5xl font-extrabold text-white tracking-tight">{rt.title[lang]}<span class="text-gold-400">.</span></h1>
+          <p class="mt-5 text-lg text-white/55 font-medium max-w-2xl">{rt.subtitle[lang]}</p>
+        </div>
+        <div class="wave-divider"><svg viewBox="0 0 1440 60" preserveAspectRatio="none" class="w-full h-[40px] md:h-[60px] block" fill="#fcf8fb"><path d="M0 60h1440V20Q1080 60 720 40T0 50z"/></svg></div>
+      </section>
+
+      {[
+        { key: 'shipping-line', label: rt.shippingLines[lang] },
+        { key: 'fleet', label: rt.fleets[lang] },
+        { key: 'agency', label: rt.agencies[lang] },
+        { key: 'certification', label: rt.certifications[lang] },
+      ].map(section => {
+        const items = byType(section.key);
+        if (!items.length) return null;
+        return (
+          <section class={`py-16 ${section.key === 'fleet' || section.key === 'certification' ? 'bg-surface-container-low' : 'bg-surface'}`}>
+            <div class="container-narrow">
+              <h2 class="text-2xl font-extrabold text-on-surface mb-8 flex items-center gap-3">
+                <span class="w-8 h-[3px] bg-gold-500 rounded-full"></span>
+                {section.label}
+              </h2>
+              <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                {items.map(ref => (
+                  <div class="rounded-xl bg-surface-container-lowest p-5 text-center transition-all hover:shadow-ambient-sm">
+                    <div class="w-14 h-14 rounded-xl mx-auto mb-3 flex items-center justify-center" style="background: linear-gradient(135deg, #243880, #3D5099);">
+                      <span class="text-xl text-white font-extrabold">{ref.name.charAt(0)}</span>
+                    </div>
+                    <h3 class="text-xs font-extrabold text-on-surface leading-tight">{ref.name}</h3>
+                    {ref.country && <span class="text-xs text-on-surface-variant mt-1 inline-block">{countryFlags[ref.country] ?? ''}</span>}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+        );
+      })}
+    </>);
+  })()}
+
+  <!-- ========== ABOUT ========== -->
+  {type === 'about' && (() => {
+    const about = t(lang, 'about'); const ap = t(lang, 'aboutPage');
+    return (<>
+      <section class="relative overflow-hidden" style="background: linear-gradient(135deg, #1A2A60 0%, #243880 40%, #3D5099 100%);">
+        <div class="container-narrow relative py-16 md:py-24">
+          <span class="label-gold">{lang === 'tr' ? 'BİZ KİMİZ' : 'ABOUT US'}</span>
+          <h1 class="mt-3 text-3xl md:text-4xl lg:text-5xl font-extrabold text-white tracking-tight">{about.title}<span class="text-gold-400">.</span></h1>
+          <p class="mt-4 text-xl text-white/60 font-medium">{about.subtitle}</p>
+        </div>
+        <div class="wave-divider"><svg viewBox="0 0 1440 60" preserveAspectRatio="none" class="w-full h-[40px] md:h-[60px] block" fill="#fcf8fb"><path d="M0 60h1440V20Q1080 60 720 40T0 50z"/></svg></div>
+      </section>
+
+      <section class="py-14 bg-surface-container-low">
+        <div class="container-narrow">
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+            {[{ n:'20+', l:about.years },{ n:'28K+', l:about.deliveries },{ n:'40+', l:about.portsCovered },{ n:'24/7', l:about.available }].map(s => (
+              <div class="text-center">
+                <div class="text-3xl md:text-4xl font-extrabold tracking-tight" style="background:linear-gradient(135deg,#243880,#3D5099);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">{s.n}</div>
+                <div class="mt-2 label">{s.l}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section class="py-20 md:py-28 bg-surface">
+        <div class="container-narrow">
+          <div class="max-w-3xl mx-auto space-y-16">
+            <div>
+              <span class="label-gold">{lang === 'tr' ? 'TARİHÇEMİZ' : 'OUR STORY'}</span>
+              <h2 class="mt-3 section-title">{ap.history}</h2>
+              <p class="mt-5 text-on-surface-variant font-medium leading-relaxed">{ap.historyText}</p>
+              <div class="mt-6 space-y-4 text-on-surface-variant font-medium leading-relaxed">
+                <p>{about.p1}</p><p>{about.p2}</p><p>{about.p3}</p>
+              </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div class="rounded-xl bg-surface-container-lowest p-8">
+                <span class="label-gold">{lang === 'tr' ? 'MİSYON' : 'MISSION'}</span>
+                <h3 class="mt-2 text-lg font-extrabold text-on-surface">{ap.mission}</h3>
+                <p class="mt-3 text-sm text-on-surface-variant font-medium leading-relaxed">{ap.missionText}</p>
+              </div>
+              <div class="rounded-xl bg-surface-container-lowest p-8">
+                <span class="label-gold">{lang === 'tr' ? 'VİZYON' : 'VISION'}</span>
+                <h3 class="mt-2 text-lg font-extrabold text-on-surface">{ap.vision}</h3>
+                <p class="mt-3 text-sm text-on-surface-variant font-medium leading-relaxed">{ap.visionText}</p>
+              </div>
+            </div>
+            <div>
+              <span class="label-gold">{lang === 'tr' ? 'DEĞERLERİMİZ' : 'OUR VALUES'}</span>
+              <h2 class="mt-3 section-title">{ap.values}</h2>
+              <div class="mt-6 grid grid-cols-2 md:grid-cols-3 gap-3">
+                {ap.valuesItems.map((v: string) => (
+                  <div class="flex items-center gap-3 px-5 py-4 rounded-xl bg-surface-container-lowest">
+                    <svg class="w-5 h-5 text-gold-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                    <span class="text-sm font-semibold text-on-surface">{v}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div>
+              <span class="label-gold">{lang === 'tr' ? 'FİLOMUZ' : 'OUR FLEET'}</span>
+              <h2 class="mt-3 section-title">{ap.fleet}</h2>
+              <p class="mt-5 text-on-surface-variant font-medium leading-relaxed">{ap.fleetText}</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </>);
+  })()}
+
+  <!-- ========== CONTACT ========== -->
+  {type === 'contact' && (() => {
+    const ct = t(lang, 'contact'); const cp = t(lang, 'contactPage');
+    return (<>
+      <section class="relative overflow-hidden" style="background: linear-gradient(135deg, #1A2A60 0%, #243880 40%, #3D5099 100%);">
+        <div class="container-narrow relative py-16 md:py-24">
+          <span class="label-gold">{lang === 'tr' ? 'BİZE ULAŞIN' : 'GET IN TOUCH'}</span>
+          <h1 class="mt-3 text-3xl md:text-4xl lg:text-5xl font-extrabold text-white tracking-tight">{ct.title}<span class="text-gold-400">.</span></h1>
+          <p class="mt-4 text-lg text-white/55 font-medium max-w-2xl">{ct.subtitle}</p>
+        </div>
+        <div class="wave-divider"><svg viewBox="0 0 1440 60" preserveAspectRatio="none" class="w-full h-[40px] md:h-[60px] block" fill="#fcf8fb"><path d="M0 60h1440V20Q1080 60 720 40T0 50z"/></svg></div>
+      </section>
+
+      <section class="py-20 md:py-28 bg-surface">
+        <div class="container-narrow">
+          <div class="grid grid-cols-1 lg:grid-cols-5 gap-14">
+            <div class="lg:col-span-3">
+              <span class="label-gold">{lang === 'tr' ? 'MESAJ FORMU' : 'MESSAGE FORM'}</span>
+              <h2 class="mt-3 text-2xl font-extrabold text-on-surface">{cp.formTitle}</h2>
+              <p class="mt-2 text-on-surface-variant font-medium">{cp.formSubtitle}</p>
+              <form class="mt-10 space-y-6" action="https://formspree.io/f/info@tokkumanya.com" method="POST">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                  <div><label for="name" class="label mb-2 block">{ct.name}</label><input type="text" id="name" name="name" required class="w-full px-4 py-3.5 rounded-xl bg-surface-container-high text-sm font-medium text-on-surface placeholder-on-surface-variant/50 outline-none transition-all focus:bg-surface-container-lowest focus:shadow-ambient-sm" /></div>
+                  <div><label for="email" class="label mb-2 block">{ct.email}</label><input type="email" id="email" name="email" required class="w-full px-4 py-3.5 rounded-xl bg-surface-container-high text-sm font-medium text-on-surface placeholder-on-surface-variant/50 outline-none transition-all focus:bg-surface-container-lowest focus:shadow-ambient-sm" /></div>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                  <div><label for="phone" class="label mb-2 block">{ct.phone}</label><input type="tel" id="phone" name="phone" class="w-full px-4 py-3.5 rounded-xl bg-surface-container-high text-sm font-medium text-on-surface outline-none transition-all focus:bg-surface-container-lowest focus:shadow-ambient-sm" /></div>
+                  <div><label for="vessel" class="label mb-2 block">{ct.vessel}</label><input type="text" id="vessel" name="vessel" class="w-full px-4 py-3.5 rounded-xl bg-surface-container-high text-sm font-medium text-on-surface outline-none transition-all focus:bg-surface-container-lowest focus:shadow-ambient-sm" /></div>
+                </div>
+                <div><label for="port" class="label mb-2 block">{ct.port}</label><select id="port" name="port" class="w-full px-4 py-3.5 rounded-xl bg-surface-container-high text-sm font-medium text-on-surface outline-none transition-all focus:bg-surface-container-lowest focus:shadow-ambient-sm"><option value="">--</option>{ports.map(p => <option value={p.id}>{p.names[lang]}</option>)}</select></div>
+                <div><label for="message" class="label mb-2 block">{ct.message}</label><textarea id="message" name="message" rows="5" required class="w-full px-4 py-3.5 rounded-xl bg-surface-container-high text-sm font-medium text-on-surface outline-none transition-all focus:bg-surface-container-lowest focus:shadow-ambient-sm resize-none"></textarea></div>
+                <button type="submit" class="btn-primary !py-4 !px-10">{ct.send}<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg></button>
+              </form>
+            </div>
+
+            <div class="lg:col-span-2 space-y-5">
+              <span class="label-gold">{lang === 'tr' ? 'İLETİŞİM BİLGİLERİ' : 'CONTACT DETAILS'}</span>
+              <h2 class="text-2xl font-extrabold text-on-surface">{ct.info}</h2>
+
+              {[
+                { icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>`, label: ct.address, value: ct.addressValue, href: null, color: 'bg-primary/10 text-primary' },
+                { icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>`, label: ct.phoneLabel, value: '+90 545 947 73 20\n+90 543 741 79 55\n+90 362 445 25 60', href: 'tel:+905459477320', color: 'bg-ocean-50 text-ocean-500' },
+                { icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>`, label: ct.emailLabel, value: 'info@tokkumanya.com', href: 'mailto:info@tokkumanya.com', color: 'bg-gold-50 text-gold-600' },
+                { icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>`, label: ct.workingHours, value: ct.workingHoursValue, href: null, color: 'bg-green-50 text-green-600' },
+              ].map(item => (
+                <div class="rounded-xl bg-surface-container-lowest p-5">
+                  <div class="flex items-start gap-4">
+                    <div class={`w-10 h-10 rounded-xl ${item.color} flex items-center justify-center flex-shrink-0`}>
+                      <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><Fragment set:html={item.icon} /></svg>
+                    </div>
+                    <div>
+                      <h3 class="label mb-1.5">{item.label}</h3>
+                      {item.href ? (
+                        <a href={item.href} class="text-sm font-semibold text-on-surface hover:text-primary transition-colors">{item.value.split('\n')[0]}</a>
+                      ) : (
+                        <p class="text-sm font-medium text-on-surface-variant whitespace-pre-line">{item.value}</p>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              ))}
+
+              <a href="https://wa.me/905459477320" target="_blank" rel="noopener noreferrer" class="btn-whatsapp w-full text-center !py-4 mt-4">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                WhatsApp
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </>);
+  })()}
+
+</BaseLayout>

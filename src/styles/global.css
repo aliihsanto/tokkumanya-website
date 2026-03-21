@@ -1,0 +1,117 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Smooth page transitions */
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.25s;
+  animation-timing-function: ease-in-out;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  /* Fade in animation for page elements */
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .animate-in {
+    animation: fadeInUp 0.5s ease-out both;
+  }
+
+  .animate-in-delay-1 { animation-delay: 0.1s; }
+  .animate-in-delay-2 { animation-delay: 0.2s; }
+  .animate-in-delay-3 { animation-delay: 0.3s; }
+
+  body {
+    @apply bg-surface text-on-surface antialiased font-medium;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+  }
+
+  [dir="rtl"] {
+    direction: rtl;
+    text-align: right;
+  }
+
+  ::selection {
+    @apply bg-primary text-white;
+  }
+
+  h1, h2, h3, h4 {
+    @apply font-extrabold tracking-tight;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl px-7 py-3.5 text-sm font-semibold text-white transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:ring-offset-2;
+    background: linear-gradient(135deg, #243880, #3D5099);
+  }
+  .btn-primary:hover {
+    background: linear-gradient(135deg, #1A2A60, #243880);
+    @apply shadow-ambient;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl bg-secondary-fixed px-7 py-3.5 text-sm font-semibold text-secondary-on-fixed transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:ring-offset-2 hover:shadow-ambient;
+  }
+
+  .btn-gold {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl px-7 py-3.5 text-sm font-semibold text-navy-900 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-gold-400/30 focus:ring-offset-2;
+    background: linear-gradient(135deg, #ffca28, #F59E0B);
+  }
+  .btn-gold:hover {
+    background: linear-gradient(135deg, #F59E0B, #c47f09);
+    @apply shadow-ambient;
+  }
+
+  .btn-whatsapp {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl bg-green-600 px-7 py-3.5 text-sm font-semibold text-white transition-all duration-200 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-400/30 focus:ring-offset-2 hover:shadow-ambient;
+  }
+
+  .label {
+    @apply text-xs font-semibold uppercase tracking-label text-on-surface-variant;
+  }
+
+  .label-gold {
+    @apply text-xs font-semibold uppercase tracking-label text-gold-500;
+  }
+
+  .section-title {
+    @apply text-3xl md:text-4xl font-extrabold text-on-surface tracking-tight;
+  }
+
+  .section-subtitle {
+    @apply mt-4 text-lg text-on-surface-variant font-medium leading-relaxed;
+  }
+
+  .card {
+    @apply rounded-xl bg-surface-container-lowest p-6 transition-all duration-200 hover:shadow-ambient;
+  }
+
+  .card-surface {
+    @apply rounded-xl bg-surface-container-low p-6 transition-all duration-200 hover:shadow-ambient-sm;
+  }
+
+  .container-narrow {
+    @apply mx-auto max-w-6xl px-5 sm:px-6 lg:px-8;
+  }
+
+  .glass {
+    @apply bg-white/80 backdrop-blur-xl;
+  }
+
+  .wave-divider {
+    @apply absolute bottom-0 left-0 right-0;
+  }
+}

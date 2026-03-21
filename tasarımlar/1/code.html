@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-container": "#f0edef",
+              "secondary-container": "#51b2fe",
+              "surface-container-low": "#f6f3f5",
+              "surface-container-high": "#eae7ea",
+              "tertiary-container": "#784b00",
+              "on-tertiary-fixed": "#2a1700",
+              "on-primary-fixed-variant": "#2e418a",
+              "on-tertiary": "#ffffff",
+              "on-secondary-container": "#00436a",
+              "secondary": "#00639a",
+              "outline-variant": "#c5c5d2",
+              "on-tertiary-container": "#ffbd6b",
+              "on-secondary-fixed": "#001d32",
+              "on-surface": "#1b1b1d",
+              "surface-container-lowest": "#ffffff",
+              "surface-dim": "#dcd9dc",
+              "on-surface-variant": "#454651",
+              "inverse-surface": "#303032",
+              "tertiary-fixed-dim": "#ffb95f",
+              "surface": "#fcf8fb",
+              "primary-fixed-dim": "#b7c4ff",
+              "error-container": "#ffdad6",
+              "on-secondary": "#ffffff",
+              "on-error-container": "#93000a",
+              "on-tertiary-fixed-variant": "#653e00",
+              "on-primary": "#ffffff",
+              "on-error": "#ffffff",
+              "on-background": "#1b1b1d",
+              "primary": "#243880",
+              "on-primary-container": "#bcc7ff",
+              "secondary-fixed-dim": "#96ccff",
+              "background": "#fcf8fb",
+              "surface-tint": "#475aa3",
+              "inverse-primary": "#b7c4ff",
+              "primary-container": "#3d5099",
+              "error": "#ba1a1a",
+              "outline": "#757682",
+              "secondary-fixed": "#cee5ff",
+              "on-primary-fixed": "#001452",
+              "tertiary-fixed": "#ffddb8",
+              "surface-bright": "#fcf8fb",
+              "primary-fixed": "#dde1ff",
+              "inverse-on-surface": "#f3f0f2",
+              "tertiary": "#593600",
+              "on-secondary-fixed-variant": "#004a75",
+              "surface-container-highest": "#e4e2e4",
+              "surface-variant": "#e4e2e4"
+            },
+            fontFamily: {
+              "headline": ["Inter"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "1.5rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .maritime-pattern {
+            background-image: radial-gradient(#ffffff 0.5px, transparent 0.5px);
+            background-size: 24px 24px;
+        }
+    </style>
+</head>
+<body class="bg-surface font-body text-on-surface">
+<!-- Top Navigation Bar -->
+<nav class="fixed top-0 w-full z-50 bg-[#fcf8fb]/80 dark:bg-slate-900/80 backdrop-blur-md shadow-2xl shadow-[#1b1b1d]/5 no-border tonal-shift-bg">
+<div class="flex justify-between items-center w-full px-8 py-4 max-w-[1440px] mx-auto">
+<div class="text-2xl font-extrabold text-[#243880] dark:text-white tracking-tighter">
+                Tok Ship Supply Co.
+            </div>
+<div class="hidden md:flex items-center space-x-8">
+<a class="text-[#243880] dark:text-blue-400 border-b-2 border-[#F59E0B] pb-1 font-medium" href="#">Home</a>
+<a class="text-slate-600 dark:text-slate-400 font-medium hover:text-[#243880] transition-colors duration-200" href="#">Services</a>
+<a class="text-slate-600 dark:text-slate-400 font-medium hover:text-[#243880] transition-colors duration-200" href="#">Fleet</a>
+<a class="text-slate-600 dark:text-slate-400 font-medium hover:text-[#243880] transition-colors duration-200" href="#">Logistics</a>
+<a class="text-slate-600 dark:text-slate-400 font-medium hover:text-[#243880] transition-colors duration-200" href="#">Contact</a>
+</div>
+<div class="flex items-center space-x-6">
+<div class="flex items-center space-x-2 text-xs font-semibold uppercase tracking-widest text-slate-500">
+<span class="material-symbols-outlined text-lg" data-icon="language">language</span>
+<span>EN</span>
+</div>
+<button class="bg-primary text-on-primary px-6 py-2.5 rounded-full font-semibold flex items-center space-x-2 transition-transform active:scale-95">
+<span class="material-symbols-outlined text-xl" data-icon="chat">chat</span>
+<span>WhatsApp</span>
+</button>
+</div>
+</div>
+</nav>
+<!-- Hero Section -->
+<section class="relative pt-32 pb-20 bg-gradient-to-br from-primary via-primary-container to-[#1b1b1d] overflow-hidden">
+<div class="maritime-pattern absolute inset-0 opacity-5 pointer-events-none"></div>
+<div class="max-w-7xl mx-auto px-8 relative z-10 grid md:grid-cols-2 gap-12 items-center">
+<div>
+<div class="inline-flex items-center space-x-2 bg-emerald-500/10 border border-emerald-500/20 px-4 py-1.5 rounded-full mb-8">
+<span class="relative flex h-3 w-3">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+<span class="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
+</span>
+<span class="text-emerald-400 text-sm font-bold tracking-widest uppercase">24/7 Global Operations</span>
+</div>
+<h1 class="text-6xl font-extrabold text-white tracking-tight leading-[1.1] mb-6">
+                    Premier Ship Chandlery <br/><span class="text-[#F59E0B]">Across All Turkish Ports.</span>
+</h1>
+<p class="text-on-primary-container text-xl font-medium mb-10 max-w-lg leading-relaxed">
+                    Reliable supply chain solutions for the maritime industry. Provisions, technical stores, and logistics at the crossroads of continents.
+                </p>
+<div class="flex flex-wrap gap-4">
+<button class="bg-[#F59E0B] text-on-tertiary-fixed px-8 py-4 rounded-xl font-extrabold flex items-center space-x-3 shadow-xl shadow-[#F59E0B]/20 transition-transform hover:scale-105 active:scale-100">
+<span class="material-symbols-outlined" data-icon="call">call</span>
+<span>Call Now</span>
+</button>
+<button class="bg-emerald-600 text-white px-8 py-4 rounded-xl font-extrabold flex items-center space-x-3 transition-transform hover:scale-105 active:scale-100">
+<span class="material-symbols-outlined" data-icon="chat">chat</span>
+<span>WhatsApp</span>
+</button>
+</div>
+</div>
+<div class="relative hidden md:block">
+<div class="rounded-3xl overflow-hidden shadow-2xl rotate-2 hover:rotate-0 transition-transform duration-500">
+<img class="w-full h-[500px] object-cover" data-alt="Large container ship at Turkish port terminal" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAePZvIaSiYOo_R7SI5VyYeWcmq-6k9aFsBPq-zmnb_QQuwLXWHV2VVOZ1dBSskaruUNp_UTrdZzdRCnD4DVbndofVsRenoTPLAm35prl6s7X5JZa85GzW11h6MKxVTS5G6MEXXvijZLkLjwu3GN8gZdn9m_rC8Uxaalqfg8iSG01ivfAcQPM-14RimO9NnfRTXU1H7YOVFbcVWnjqcVefxd2lEJYT2uFjeFfAAL7gLCaGrRqEDr1yLKkryuWUjFse1xWA1cmUsuZc"/>
+</div>
+<div class="absolute -bottom-6 -left-6 bg-surface-container-lowest p-6 rounded-2xl shadow-2xl flex items-center space-x-4">
+<div class="bg-primary/10 p-3 rounded-xl">
+<span class="material-symbols-outlined text-primary text-3xl" data-icon="verified">verified</span>
+</div>
+<div>
+<div class="text-on-surface font-extrabold text-lg">ISSA Member</div>
+<div class="text-on-surface-variant text-sm font-medium">Quality Guaranteed</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Wave Divider -->
+<div class="absolute bottom-0 left-0 w-full overflow-hidden leading-[0]">
+<svg class="relative block w-full h-[60px]" data-name="Layer 1" preserveaspectratio="none" viewbox="0 0 1200 120" xmlns="http://www.w3.org/2000/svg">
+<path class="fill-surface" d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V0C0,0,183.42,81.72,321.39,56.44Z"></path>
+</svg>
+</div>
+</section>
+<!-- Stats Bar -->
+<section class="py-12 bg-surface">
+<div class="max-w-7xl mx-auto px-8">
+<div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+<div class="text-center md:text-left">
+<div class="text-5xl font-extrabold text-primary mb-1">20+</div>
+<div class="text-slate-500 font-semibold uppercase tracking-widest text-xs">Years Experience</div>
+</div>
+<div class="text-center md:text-left">
+<div class="text-5xl font-extrabold text-primary mb-1">28K+</div>
+<div class="text-slate-500 font-semibold uppercase tracking-widest text-xs">Deliveries Made</div>
+</div>
+<div class="text-center md:text-left">
+<div class="text-5xl font-extrabold text-primary mb-1">40+</div>
+<div class="text-slate-500 font-semibold uppercase tracking-widest text-xs">Turkish Ports</div>
+</div>
+<div class="text-center md:text-left">
+<div class="text-5xl font-extrabold text-primary mb-1">24/7</div>
+<div class="text-slate-500 font-semibold uppercase tracking-widest text-xs">Full Readiness</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Services Section -->
+<section class="py-24 bg-surface-container-low">
+<div class="max-w-7xl mx-auto px-8">
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+<div class="max-w-2xl">
+<h2 class="text-xs font-bold text-[#F59E0B] uppercase tracking-[0.2em] mb-4">Our Expertise</h2>
+<h3 class="text-4xl font-extrabold text-primary tracking-tight">Full-Spectrum Maritime Supply Solutions</h3>
+</div>
+<p class="text-on-surface-variant font-medium max-w-sm">From fresh provisions to technical deck stores, we provide everything your vessel needs to keep sailing.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- Provisions Card -->
+<div class="bg-surface-container-lowest p-8 rounded-xl shadow-lg shadow-on-surface/5 group hover:-translate-y-2 transition-transform duration-300">
+<div class="text-5xl mb-6">🍱</div>
+<h4 class="text-xl font-extrabold text-primary mb-3">Provisions</h4>
+<p class="text-on-surface-variant font-medium leading-relaxed mb-6">Fresh, frozen, and dry goods sourced from local premium markets. Quality assurance for every crew member.</p>
+<a class="text-primary font-bold flex items-center space-x-2 group-hover:space-x-4 transition-all" href="#">
+<span>Learn More</span>
+<span class="material-symbols-outlined text-sm" data-icon="arrow_forward">arrow_forward</span>
+</a>
+</div>
+<!-- Technical Stores -->
+<div class="bg-surface-container-lowest p-8 rounded-xl shadow-lg shadow-on-surface/5 group hover:-translate-y-2 transition-transform duration-300">
+<div class="text-5xl mb-6">⚙️</div>
+<h4 class="text-xl font-extrabold text-primary mb-3">Technical Stores</h4>
+<p class="text-on-surface-variant font-medium leading-relaxed mb-6">IMPA/ISSA coded deck, engine, and cabin stores. High-quality tools and hardware for maintenance.</p>
+<a class="text-primary font-bold flex items-center space-x-2 group-hover:space-x-4 transition-all" href="#">
+<span>Learn More</span>
+<span class="material-symbols-outlined text-sm" data-icon="arrow_forward">arrow_forward</span>
+</a>
+</div>
+<!-- Logistics -->
+<div class="bg-surface-container-lowest p-8 rounded-xl shadow-lg shadow-on-surface/5 group hover:-translate-y-2 transition-transform duration-300">
+<div class="text-5xl mb-6">🚢</div>
+<h4 class="text-xl font-extrabold text-primary mb-3">Spare Parts &amp; Logistics</h4>
+<p class="text-on-surface-variant font-medium leading-relaxed mb-6">Customs clearance and "Last Mile" delivery of critical engine spare parts directly to your deck.</p>
+<a class="text-primary font-bold flex items-center space-x-2 group-hover:space-x-4 transition-all" href="#">
+<span>Learn More</span>
+<span class="material-symbols-outlined text-sm" data-icon="arrow_forward">arrow_forward</span>
+</a>
+</div>
+</div>
+</div>
+</section>
+<!-- Ports Section -->
+<section class="py-24 bg-surface">
+<div class="max-w-7xl mx-auto px-8">
+<div class="text-center mb-16">
+<h2 class="text-4xl font-extrabold text-primary mb-4">Strategically Positioned Across Turkey</h2>
+<p class="text-on-surface-variant font-medium max-w-2xl mx-auto">We operate in every major Turkish maritime hub, ensuring zero delays in your supply chain.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+<!-- Marmara -->
+<div class="bg-surface-container-low rounded-xl p-6 border-l-4 border-[#F59E0B]">
+<h5 class="font-extrabold text-primary text-lg mb-4 flex items-center space-x-2">
+<span class="material-symbols-outlined text-[#F59E0B]" data-icon="anchor">anchor</span>
+<span>Marmara Sea</span>
+</h5>
+<ul class="space-y-2 font-medium text-on-surface-variant">
+<li>Istanbul</li>
+<li>Tuzla &amp; Yalova</li>
+<li>Ambarli</li>
+<li>Izmit / Diliskelesi</li>
+<li>Tekirdag</li>
+</ul>
+</div>
+<!-- Aegean -->
+<div class="bg-surface-container-low rounded-xl p-6 border-l-4 border-[#F59E0B]">
+<h5 class="font-extrabold text-primary text-lg mb-4 flex items-center space-x-2">
+<span class="material-symbols-outlined text-[#F59E0B]" data-icon="anchor">anchor</span>
+<span>Aegean Sea</span>
+</h5>
+<ul class="space-y-2 font-medium text-on-surface-variant">
+<li>Izmir / Aliaga</li>
+<li>Nemrut Bay</li>
+<li>Dikili</li>
+<li>Bodrum</li>
+<li>Fethiye</li>
+</ul>
+</div>
+<!-- Mediterranean -->
+<div class="bg-surface-container-low rounded-xl p-6 border-l-4 border-[#F59E0B]">
+<h5 class="font-extrabold text-primary text-lg mb-4 flex items-center space-x-2">
+<span class="material-symbols-outlined text-[#F59E0B]" data-icon="anchor">anchor</span>
+<span>Mediterranean</span>
+</h5>
+<ul class="space-y-2 font-medium text-on-surface-variant">
+<li>Mersin</li>
+<li>Iskenderun</li>
+<li>Antalya</li>
+<li>Ceyhan (BOTAŞ)</li>
+<li>Tasucu</li>
+</ul>
+</div>
+<!-- Black Sea -->
+<div class="bg-surface-container-low rounded-xl p-6 border-l-4 border-[#F59E0B]">
+<h5 class="font-extrabold text-primary text-lg mb-4 flex items-center space-x-2">
+<span class="material-symbols-outlined text-[#F59E0B]" data-icon="anchor">anchor</span>
+<span>Black Sea</span>
+</h5>
+<ul class="space-y-2 font-medium text-on-surface-variant">
+<li>Samsun</li>
+<li>Trabzon</li>
+<li>Zonguldak / Eregli</li>
+<li>Filyos</li>
+<li>Hopa</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<!-- Why Us Section (Asymmetric Bento) -->
+<section class="py-24 bg-primary relative overflow-hidden">
+<div class="maritime-pattern absolute inset-0 opacity-5 pointer-events-none"></div>
+<div class="max-w-7xl mx-auto px-8 relative z-10">
+<h2 class="text-4xl font-extrabold text-white mb-16 text-center">Why Leading Fleets Trust Tok Ship Supply</h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="bg-white/10 backdrop-blur-xl border border-white/10 p-8 rounded-xl">
+<span class="material-symbols-outlined text-[#F59E0B] text-4xl mb-4" data-icon="speed">speed</span>
+<h5 class="text-white font-extrabold text-xl mb-2">Extreme Speed</h5>
+<p class="text-on-primary-container font-medium">Under 2-hour response time for all RFQs, keeping your turnaround tight.</p>
+</div>
+<div class="bg-white/10 backdrop-blur-xl border border-white/10 p-8 rounded-xl">
+<span class="material-symbols-outlined text-[#F59E0B] text-4xl mb-4" data-icon="verified_user">verified_user</span>
+<h5 class="text-white font-extrabold text-xl mb-2">ISSA/IMPA Certified</h5>
+<p class="text-on-primary-container font-medium">Adhering to international maritime standards in every single delivery.</p>
+</div>
+<div class="bg-white/10 backdrop-blur-xl border border-white/10 p-8 rounded-xl">
+<span class="material-symbols-outlined text-[#F59E0B] text-4xl mb-4" data-icon="monitoring">monitoring</span>
+<h5 class="text-white font-extrabold text-xl mb-2">Live Tracking</h5>
+<p class="text-on-primary-container font-medium">Know exactly where your supplies are from warehouse to deck.</p>
+</div>
+<div class="bg-white/10 backdrop-blur-xl border border-white/10 p-8 rounded-xl">
+<span class="material-symbols-outlined text-[#F59E0B] text-4xl mb-4" data-icon="payments">payments</span>
+<h5 class="text-white font-extrabold text-xl mb-2">Fair Pricing</h5>
+<p class="text-on-primary-container font-medium">Transparent billing with no hidden port surcharges or logistics fees.</p>
+</div>
+<div class="bg-white/10 backdrop-blur-xl border border-white/10 p-8 rounded-xl">
+<span class="material-symbols-outlined text-[#F59E0B] text-4xl mb-4" data-icon="diversity_3">diversity_3</span>
+<h5 class="text-white font-extrabold text-xl mb-2">Multilingual Support</h5>
+<p class="text-on-primary-container font-medium">Communication in 7 languages for seamless international cooperation.</p>
+</div>
+<div class="bg-white/10 backdrop-blur-xl border border-white/10 p-8 rounded-xl">
+<span class="material-symbols-outlined text-[#F59E0B] text-4xl mb-4" data-icon="schedule">schedule</span>
+<h5 class="text-white font-extrabold text-xl mb-2">24/7 Availability</h5>
+<p class="text-on-primary-container font-medium">Our teams work in shifts to ensure coverage even on public holidays.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- FAQ Accordion -->
+<section class="py-24 bg-surface">
+<div class="max-w-3xl mx-auto px-8">
+<h2 class="text-3xl font-extrabold text-primary mb-12 text-center">Frequently Asked Questions</h2>
+<div class="space-y-4">
+<div class="bg-surface-container-low rounded-xl p-6">
+<div class="flex justify-between items-center cursor-pointer">
+<h6 class="font-extrabold text-primary">How fast can you deliver to Istanbul Anchorage?</h6>
+<span class="material-symbols-outlined text-primary" data-icon="expand_more">expand_more</span>
+</div>
+<p class="mt-4 text-on-surface-variant font-medium">We maintain a permanent fleet of supply barges in Istanbul. Standard deliveries are completed within 4-6 hours of confirmation.</p>
+</div>
+<div class="bg-surface-container-low rounded-xl p-6">
+<div class="flex justify-between items-center cursor-pointer">
+<h6 class="font-extrabold text-primary">Do you provide fresh drinking water?</h6>
+<span class="material-symbols-outlined text-primary" data-icon="expand_more">expand_more</span>
+</div>
+</div>
+<div class="bg-surface-container-low rounded-xl p-6">
+<div class="flex justify-between items-center cursor-pointer">
+<h6 class="font-extrabold text-primary">Can you handle spare parts customs clearance?</h6>
+<span class="material-symbols-outlined text-primary" data-icon="expand_more">expand_more</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="bg-[#0C101F] text-white pt-16 pb-8">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-12 px-8 max-w-7xl mx-auto">
+<div>
+<div class="text-3xl font-black text-white mb-6">Tok Ship Supply Co.</div>
+<p class="text-slate-400 font-medium leading-relaxed">Your trusted partner in Turkish waters, providing excellence in maritime supply since 2004.</p>
+<div class="flex mt-6 space-x-4">
+<span class="material-symbols-outlined text-[#F59E0B] opacity-80 hover:opacity-100 cursor-pointer" data-icon="language">language</span>
+<span class="material-symbols-outlined text-[#F59E0B] opacity-80 hover:opacity-100 cursor-pointer" data-icon="mail">mail</span>
+<span class="material-symbols-outlined text-[#F59E0B] opacity-80 hover:opacity-100 cursor-pointer" data-icon="call">call</span>
+</div>
+</div>
+<div>
+<h6 class="text-[#F59E0B] uppercase font-semibold text-sm tracking-widest mb-6">Quick Links</h6>
+<ul class="space-y-4">
+<li><a class="text-slate-400 hover:text-white transition-colors hover:translate-x-1 inline-block" href="#">Home</a></li>
+<li><a class="text-slate-400 hover:text-white transition-colors hover:translate-x-1 inline-block" href="#">About Us</a></li>
+<li><a class="text-slate-400 hover:text-white transition-colors hover:translate-x-1 inline-block" href="#">Fleet Details</a></li>
+<li><a class="text-slate-400 hover:text-white transition-colors hover:translate-x-1 inline-block" href="#">Careers</a></li>
+</ul>
+</div>
+<div>
+<h6 class="text-[#F59E0B] uppercase font-semibold text-sm tracking-widest mb-6">Services</h6>
+<ul class="space-y-4">
+<li><a class="text-slate-400 hover:text-white transition-colors hover:translate-x-1 inline-block" href="#">Provisions</a></li>
+<li><a class="text-slate-400 hover:text-white transition-colors hover:translate-x-1 inline-block" href="#">Technical Stores</a></li>
+<li><a class="text-slate-400 hover:text-white transition-colors hover:translate-x-1 inline-block" href="#">Logistics</a></li>
+<li><a class="text-slate-400 hover:text-white transition-colors hover:translate-x-1 inline-block" href="#">Safety Equipment</a></li>
+</ul>
+</div>
+<div>
+<h6 class="text-[#F59E0B] uppercase font-semibold text-sm tracking-widest mb-6">Contact Us</h6>
+<p class="text-slate-400 font-medium mb-4">Sahil Blv. No:42, Tuzla/Istanbul, Turkey</p>
+<p class="text-white font-extrabold text-xl">+90 (216) 444 0 544</p>
+<p class="text-slate-400 font-medium mt-2">info@tokshipsupply.com</p>
+</div>
+</div>
+<div class="max-w-7xl mx-auto px-8 mt-16 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
+<p class="text-slate-400 text-sm">© 2024 Tok Ship Supply Co. All Rights Reserved.</p>
+<div class="flex space-x-6 text-sm">
+<a class="text-slate-400 hover:text-white" href="#">Privacy Policy</a>
+<a class="text-slate-400 hover:text-white" href="#">Terms of Service</a>
+</div>
+</div>
+</footer>
+</body></html>

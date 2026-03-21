@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Services Overview | Tok Ship Supply Co.</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "surface-container": "#f0edef",
+                        "secondary-container": "#51b2fe",
+                        "surface-container-low": "#f6f3f5",
+                        "surface-container-high": "#eae7ea",
+                        "tertiary-container": "#784b00",
+                        "on-tertiary-fixed": "#2a1700",
+                        "on-primary-fixed-variant": "#2e418a",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary-container": "#00436a",
+                        "secondary": "#00639a",
+                        "outline-variant": "#c5c5d2",
+                        "on-tertiary-container": "#ffbd6b",
+                        "on-secondary-fixed": "#001d32",
+                        "on-surface": "#1b1b1d",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-dim": "#dcd9dc",
+                        "on-surface-variant": "#454651",
+                        "inverse-surface": "#303032",
+                        "tertiary-fixed-dim": "#ffb95f",
+                        "surface": "#fcf8fb",
+                        "primary-fixed-dim": "#b7c4ff",
+                        "error-container": "#ffdad6",
+                        "on-secondary": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-fixed-variant": "#653e00",
+                        "on-primary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "on-background": "#1b1b1d",
+                        "primary": "#243880",
+                        "on-primary-container": "#bcc7ff",
+                        "secondary-fixed-dim": "#96ccff",
+                        "background": "#fcf8fb",
+                        "surface-tint": "#475aa3",
+                        "inverse-primary": "#b7c4ff",
+                        "primary-container": "#3d5099",
+                        "error": "#ba1a1a",
+                        "outline": "#757682",
+                        "secondary-fixed": "#cee5ff",
+                        "on-primary-fixed": "#001452",
+                        "tertiary-fixed": "#ffddb8",
+                        "surface-bright": "#fcf8fb",
+                        "primary-fixed": "#dde1ff",
+                        "inverse-on-surface": "#f3f0f2",
+                        "tertiary": "#593600",
+                        "on-secondary-fixed-variant": "#004a75",
+                        "surface-container-highest": "#e4e2e4",
+                        "surface-variant": "#e4e2e4"
+                    },
+                    fontFamily: {
+                        "headline": ["Inter"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1.5rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .maritime-pattern {
+            background-image: radial-gradient(circle at 2px 2px, #243880 1px, transparent 0);
+            background-size: 40px 40px;
+            opacity: 0.05;
+        }
+        .editorial-shadow {
+            box-shadow: 0px 20px 40px rgba(27, 27, 29, 0.06);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-secondary-container selection:text-on-secondary-container">
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full z-50 bg-[#fcf8fb]/80 dark:bg-slate-900/80 backdrop-blur-md shadow-2xl shadow-[#1b1b1d]/5">
+<nav class="flex justify-between items-center w-full px-8 py-4 max-w-[1440px] mx-auto">
+<div class="text-2xl font-extrabold text-[#243880] dark:text-white tracking-tighter">
+                Tok Ship Supply Co.
+            </div>
+<div class="hidden md:flex items-center space-x-8">
+<a class="text-slate-600 dark:text-slate-400 font-medium hover:text-[#243880] transition-colors duration-200" href="#">Home</a>
+<a class="text-[#243880] dark:text-blue-400 border-b-2 border-[#F59E0B] pb-1 font-medium" href="#">Services</a>
+<a class="text-slate-600 dark:text-slate-400 font-medium hover:text-[#243880] transition-colors duration-200" href="#">Fleet</a>
+<a class="text-slate-600 dark:text-slate-400 font-medium hover:text-[#243880] transition-colors duration-200" href="#">Logistics</a>
+<a class="text-slate-600 dark:text-slate-400 font-medium hover:text-[#243880] transition-colors duration-200" href="#">Contact</a>
+</div>
+<div class="flex items-center space-x-6">
+<button class="flex items-center space-x-2 text-slate-600 hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="language">language</span>
+<span class="text-sm font-semibold tracking-widest uppercase">EN</span>
+</button>
+<a class="bg-primary text-on-primary px-6 py-2.5 rounded-full font-bold flex items-center space-x-2 scale-95 active:scale-100 transition-transform hover:bg-primary-container" href="https://wa.me/1234567890">
+<span class="material-symbols-outlined" data-icon="chat">chat</span>
+<span>WhatsApp</span>
+</a>
+</div>
+</nav>
+</header>
+<main class="pt-24 pb-20">
+<!-- Breadcrumb -->
+<nav class="max-w-7xl mx-auto px-8 py-6">
+<ol class="flex items-center space-x-2 text-sm font-semibold tracking-widest uppercase text-outline">
+<li><a class="hover:text-primary transition-colors" href="#">Home</a></li>
+<li><span class="material-symbols-outlined text-xs">chevron_right</span></li>
+<li class="text-primary">Services</li>
+</ol>
+</nav>
+<!-- Hero Section -->
+<section class="max-w-7xl mx-auto px-8 mb-20">
+<div class="relative rounded-2xl overflow-hidden bg-primary-container p-12 md:p-20 text-on-primary-container min-h-[400px] flex flex-col justify-center">
+<div class="absolute inset-0 maritime-pattern"></div>
+<div class="relative z-10 max-w-2xl">
+<h1 class="text-5xl md:text-7xl font-extrabold tracking-tight mb-6 leading-tight">Comprehensive Marine Supply Solutions</h1>
+<p class="text-xl font-medium opacity-90 leading-relaxed">From cold chain food provisions to technical engine room components, we provide the architectural vessel for your maritime operations.</p>
+</div>
+<div class="absolute right-0 top-0 h-full w-1/3 hidden lg:block">
+<img alt="Ship at Port" class="w-full h-full object-cover opacity-30 mix-blend-overlay" data-alt="Large container ship at a busy industrial port" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAbsfeKR-AGotbIkaDTrGTcnitoRaoMh6m0nOsAIYMh453Qtoh6eFCuGx_tXplOh2_LH1UPcbAQHVq_8lXMLg0piC6cF_JDON9XvXInQeZViXqnr4-KweluAypPVoH5w8OykqHdNkOvV4lFPTJeV9P9BiGLVJWIQ5O-lgYQfd1PBFGVUvk8ZQbjlr1brdVHY-1uuJWR7BZ8nnzEXK9E9nGkTfU_4k422DPN9Z2mLnuSbHf7QOgWtOnFNAvaQzYJxGopwkXNZSVLhWA"/>
+</div>
+</div>
+</section>
+<!-- Main Services Bento Grid -->
+<section class="max-w-7xl mx-auto px-8 space-y-32">
+<!-- Food Provisions - Cold Chain -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
+<div class="md:col-span-7 relative">
+<div class="aspect-video rounded-2xl overflow-hidden editorial-shadow">
+<img alt="Fresh Produce" class="w-full h-full object-cover" data-alt="Fresh vegetables and fruits in a cold storage environment" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCLpuTKbTCirKjof39ZfjjZXk5eAhA3lmytV9Lc8uyCKmQJn2z3ijgiEsqA-g43vbvk6EEfHlL3IJb6qRLucYOLWN6oHWCjB7Lx_4IKfZIwGnhDpC9qwDWnNUqOf_OSAP-2rDrrXJ706xiGnThBiXUmw-Zb9M5vRaN07oUifePDOKLR6EaYBfrxW_scVTeMNRVnANtogtHGJY2ToSD-HG30tIuBpg1rvr2OmpbJkUSTnSD1u-okVDbf1Tz0z83xNdm2F3u4FsA9xQc"/>
+</div>
+<div class="absolute -bottom-6 -right-6 bg-surface-container-lowest p-6 rounded-2xl shadow-xl max-w-xs hidden md:block">
+<div class="flex items-center space-x-3 text-[#F59E0B] mb-2">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">ac_unit</span>
+<span class="text-xs font-bold tracking-widest uppercase">Verified Cold Chain</span>
+</div>
+<p class="text-sm font-medium text-on-surface">Maintained at -18°C from warehouse to vessel gangway.</p>
+</div>
+</div>
+<div class="md:col-span-5">
+<span class="text-[#F59E0B] font-bold tracking-widest uppercase text-sm block mb-4">Provisioning Excellence</span>
+<h2 class="text-4xl font-extrabold tracking-tight text-primary mb-6">Food Provisions</h2>
+<p class="text-on-surface-variant font-medium mb-8 leading-relaxed">Our refrigerated fleet ensures that fresh produce, dairy, and frozen meats reach your crew in peak condition, regardless of the port stay duration.</p>
+<ul class="space-y-4 mb-8">
+<li class="flex items-start space-x-3">
+<span class="material-symbols-outlined text-primary" data-icon="check_circle">check_circle</span>
+<span class="font-medium">Fresh International &amp; Local Produce</span>
+</li>
+<li class="flex items-start space-x-3">
+<span class="material-symbols-outlined text-primary" data-icon="check_circle">check_circle</span>
+<span class="font-medium">Premium Grade Frozen Meats &amp; Seafood</span>
+</li>
+<li class="flex items-start space-x-3">
+<span class="material-symbols-outlined text-primary" data-icon="check_circle">check_circle</span>
+<span class="font-medium">Dry Bonded Stores &amp; Beverages</span>
+</li>
+</ul>
+<button class="text-primary font-bold flex items-center space-x-2 group">
+<span>View Catalog</span>
+<span class="material-symbols-outlined transition-transform group-hover:translate-x-1" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Cabin & Safety - Asymmetric Flip -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
+<div class="md:col-span-5 order-2 md:order-1">
+<span class="text-[#F59E0B] font-bold tracking-widest uppercase text-sm block mb-4">Operations &amp; Welfare</span>
+<h2 class="text-4xl font-extrabold tracking-tight text-primary mb-6">Cabin &amp; Safety Equipment</h2>
+<p class="text-on-surface-variant font-medium mb-8 leading-relaxed">Protecting your most valuable asset: your people. We supply certified IMO-standard safety gear and premium cabin amenities for crew comfort.</p>
+<div class="grid grid-cols-2 gap-4">
+<div class="bg-surface-container-low p-6 rounded-2xl">
+<span class="material-symbols-outlined text-primary mb-3" data-icon="clean_hands">clean_hands</span>
+<h3 class="font-extrabold text-lg mb-1">Cabin Care</h3>
+<p class="text-xs text-on-surface-variant">Industrial cleaning supplies &amp; textiles.</p>
+</div>
+<div class="bg-surface-container-low p-6 rounded-2xl">
+<span class="material-symbols-outlined text-primary mb-3" data-icon="engineering">engineering</span>
+<h3 class="font-extrabold text-lg mb-1">PPE Gear</h3>
+<h3 class="font-extrabold text-lg mb-1">PPE Gear</h3>
+<p class="text-xs text-on-surface-variant">Certified helmets, boots &amp; harnesses.</p>
+</div>
+</div>
+</div>
+<div class="md:col-span-7 order-1 md:order-2">
+<div class="aspect-video rounded-2xl overflow-hidden editorial-shadow">
+<img alt="Safety Equipment" class="w-full h-full object-cover" data-alt="Organized industrial safety equipment including vests and helmets" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCLMYQgHi3yT3RGP86M8EOznvenBwab1ako0kkeSlnIli3LFPbathDdSRO8boJDXbgnRptuMfxKvMIVwbSBaWQ5LddNtB8WN8_by4jgJby-vN8BclnaauCRbjnsY7meF7h02voPnswR_n6DuuLQj5PQqREOnsVLOEAFuAcbq1uI4E1jK_R7Zwp8XwgXIRTA6jdZc3aUe4Hp_RIX0bTXsprPHtPpxuWAxrx-F6EO2-TJDGNmz8PNgsgKbvtPfBNu_9-yLk3SXbx3ZPg"/>
+</div>
+</div>
+</div>
+<!-- Technical & Deck - Card Style -->
+<div class="bg-surface-container-low rounded-2xl p-8 md:p-16">
+<div class="max-w-4xl mx-auto text-center mb-16">
+<h2 class="text-4xl font-extrabold tracking-tight text-primary mb-4">Deck &amp; Engine Room Supplies</h2>
+<p class="text-on-surface-variant font-medium text-lg">Heavy-duty technical components for uninterrupted voyages.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<div class="bg-surface-container-lowest p-8 rounded-2xl editorial-shadow hover:translate-y-[-8px] transition-transform duration-300">
+<div class="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6">
+<span class="material-symbols-outlined text-primary" data-icon="settings_slow_motion">settings_slow_motion</span>
+</div>
+<h3 class="text-xl font-extrabold mb-4">Technical Stores</h3>
+<p class="text-on-surface-variant text-sm font-medium mb-6">Precision valves, bearings, and specialized gaskets for diverse engine configurations.</p>
+<ul class="text-xs font-bold tracking-widest uppercase text-outline space-y-2">
+<li>• Lubricants &amp; Greases</li>
+<li>• Hand &amp; Power Tools</li>
+</ul>
+</div>
+<div class="bg-surface-container-lowest p-8 rounded-2xl editorial-shadow hover:translate-y-[-8px] transition-transform duration-300">
+<div class="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6">
+<span class="material-symbols-outlined text-primary" data-icon="anchor">anchor</span>
+</div>
+<h3 class="text-xl font-extrabold mb-4">Deck Hardware</h3>
+<p class="text-on-surface-variant text-sm font-medium mb-6">Mooring ropes, hardware, and maintenance coatings designed for harsh saltwater environments.</p>
+<ul class="text-xs font-bold tracking-widest uppercase text-outline space-y-2">
+<li>• Marine Paint &amp; Primers</li>
+<li>• Rigging Equipment</li>
+</ul>
+</div>
+<div class="bg-surface-container-lowest p-8 rounded-2xl editorial-shadow hover:translate-y-[-8px] transition-transform duration-300">
+<div class="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6">
+<span class="material-symbols-outlined text-primary" data-icon="bolt">bolt</span>
+</div>
+<h3 class="text-xl font-extrabold mb-4">Electrical Spares</h3>
+<p class="text-on-surface-variant text-sm font-medium mb-6">Marine-grade wiring, lighting fixtures, and circuit protection systems for naval use.</p>
+<ul class="text-xs font-bold tracking-widest uppercase text-outline space-y-2">
+<li>• Explosion-proof Gear</li>
+<li>• Navigation Lighting</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<!-- FAQ Section -->
+<section class="max-w-4xl mx-auto px-8 py-32">
+<h2 class="text-3xl font-extrabold tracking-tight text-center mb-12">Supply Logistics &amp; Standards</h2>
+<div class="space-y-6">
+<div class="bg-surface-container-low p-6 rounded-2xl">
+<button class="w-full flex justify-between items-center text-left">
+<span class="font-extrabold text-lg">What are your typical delivery schedules?</span>
+<span class="material-symbols-outlined">expand_more</span>
+</button>
+<div class="mt-4 text-on-surface-variant font-medium">
+                        We operate 24/7/365. Standard deliveries are coordinated 48 hours prior to vessel arrival, but we specialize in "last-mile" emergency supply within 6 hours for major regional ports.
+                    </div>
+</div>
+<div class="bg-surface-container-low p-6 rounded-2xl">
+<button class="w-full flex justify-between items-center text-left">
+<span class="font-extrabold text-lg">How do you maintain quality standards for provisions?</span>
+<span class="material-symbols-outlined">expand_more</span>
+</button>
+<div class="mt-4 text-on-surface-variant font-medium">
+                        All our food handling facilities are ISO 22000 certified. We utilize GPS-tracked refrigerated trucks with live temperature monitoring to ensure the cold chain is never broken.
+                    </div>
+</div>
+<div class="bg-surface-container-low p-6 rounded-2xl">
+<button class="w-full flex justify-between items-center text-left">
+<span class="font-extrabold text-lg">Do you supply technical manuals or certification?</span>
+<span class="material-symbols-outlined">expand_more</span>
+</button>
+<div class="mt-4 text-on-surface-variant font-medium">
+                        Yes, all technical and safety equipment comes with manufacturer certificates and, where applicable, Class Approval certificates (DNV, LR, BV).
+                    </div>
+</div>
+</div>
+</section>
+<!-- CTA Section -->
+<section class="max-w-7xl mx-auto px-8 mb-20">
+<div class="bg-[#0C101F] rounded-2xl p-12 text-center relative overflow-hidden">
+<div class="absolute inset-0 opacity-10 maritime-pattern"></div>
+<div class="relative z-10">
+<h2 class="text-3xl md:text-5xl font-extrabold text-white mb-6">Need an urgent quote?</h2>
+<p class="text-slate-400 text-lg mb-10 max-w-xl mx-auto">Connect directly with our fleet coordinators for real-time inventory checks and logistics scheduling.</p>
+<a class="inline-flex items-center space-x-3 bg-[#F59E0B] text-[#0C101F] px-10 py-5 rounded-full font-black text-xl hover:bg-white transition-all shadow-xl" href="https://wa.me/1234567890">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">chat</span>
+<span>Request Quote via WhatsApp</span>
+</a>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-[#0C101F] dark:bg-black text-white w-full pt-16 pb-8">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-12 px-8 max-w-7xl mx-auto">
+<div class="space-y-6">
+<div class="text-3xl font-black text-white">Tok Ship Supply Co.</div>
+<p class="text-slate-400 font-medium">Superior maritime logistics and supply solutions for the modern fleet.</p>
+</div>
+<div>
+<h3 class="text-lg font-extrabold text-white mb-6">Quick Links</h3>
+<ul class="space-y-4 text-slate-400 font-medium">
+<li><a class="hover:text-white transition-colors" href="#">About Us</a></li>
+<li><a class="hover:text-white transition-colors" href="#">Port Coverage</a></li>
+<li><a class="hover:text-white transition-colors" href="#">Our Fleet</a></li>
+<li><a class="hover:text-white transition-colors" href="#">Sustainability</a></li>
+</ul>
+</div>
+<div>
+<h3 class="text-lg font-extrabold text-white mb-6">Services</h3>
+<ul class="space-y-4 text-slate-400 font-medium">
+<li><a class="hover:text-white transition-colors" href="#">Provisions</a></li>
+<li><a class="hover:text-white transition-colors" href="#">Technical Stores</a></li>
+<li><a class="hover:text-white transition-colors" href="#">Safety Equipment</a></li>
+<li><a class="hover:text-white transition-colors" href="#">Bonded Stores</a></li>
+</ul>
+</div>
+<div>
+<h3 class="text-[#F59E0B] uppercase text-sm font-bold tracking-widest mb-6">Contact Us</h3>
+<ul class="space-y-4 text-slate-400 font-medium">
+<li class="flex items-center space-x-3">
+<span class="material-symbols-outlined text-sm">mail</span>
+<span>ops@tokship.com</span>
+</li>
+<li class="flex items-center space-x-3">
+<span class="material-symbols-outlined text-sm">call</span>
+<span>+1 (555) 098-7654</span>
+</li>
+<li class="pt-4 flex space-x-4">
+<a class="hover:text-[#F59E0B] transition-colors" href="#"><span class="material-symbols-outlined">public</span></a>
+<a class="hover:text-[#F59E0B] transition-colors" href="#"><span class="material-symbols-outlined">share</span></a>
+</li>
+</ul>
+</div>
+</div>
+<div class="max-w-7xl mx-auto px-8 mt-16 pt-8 border-t border-slate-800 text-slate-500 text-sm font-medium flex flex-col md:flex-row justify-between items-center">
+<p>© 2024 Tok Ship Supply Co. All Rights Reserved.</p>
+<div class="flex space-x-8 mt-4 md:mt-0">
+<a class="hover:text-white transition-colors" href="#">Privacy Policy</a>
+<a class="hover:text-white transition-colors" href="#">Terms of Service</a>
+</div>
+</div>
+</footer>
+</body></html>
