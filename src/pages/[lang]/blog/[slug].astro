@@ -1,0 +1,112 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { LANGUAGES, type Lang, t, slugs } from '@data/i18n';
+import { blogPosts, type BlogPost } from '@data/blog-posts';
+
+export function getStaticPaths() {
+  const paths: any[] = [];
+  for (const lang of LANGUAGES) {
+    for (const post of blogPosts) {
+      const postSlug = post.slug[lang] ?? post.slug.tr;
+      paths.push({ params: { lang, slug: postSlug }, props: { lang, post } });
+    }
+  }
+  return paths;
+}
+
+const { lang, post } = Astro.props as { lang: Lang; post: BlogPost };
+const postTitle = post.title[lang] ?? post.title.tr;
+const postExcerpt = post.excerpt[lang] ?? post.excerpt.tr;
+const postContent = post.content[lang] ?? post.content.tr;
+const alternates = LANGUAGES.map(l => ({ lang: l as Lang, path: `/${l}/blog/${post.slug[l] ?? post.slug.tr}/` }));
+
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": postTitle,
+  "description": postExcerpt,
+  "datePublished": post.date,
+  "author": { "@type": "Organization", "name": "Tok Ship Supply" },
+  "publisher": { "@type": "Organization", "name": "Tok Ship Supply", "logo": { "@type": "ImageObject", "url": "https://www.tokkumanya.com/logo/logo.png" } },
+  "keywords": post.keywords.join(', '),
+};
+---
+
+<BaseLayout title={`${postTitle} | Tok Ship Supply Blog`} description={postExcerpt} lang={lang} canonicalPath={`/${lang}/blog/${post.slug[lang] ?? post.slug.tr}/`} alternates={alternates} schema={articleSchema}>
+
+  <!-- Breadcrumb -->
+  <nav class="bg-surface-container-low" aria-label="Breadcrumb">
+    <div class="container-narrow py-3.5">
+      <ol class="flex items-center gap-2 text-sm font-medium text-on-surface-variant flex-wrap">
+        <li><a href={`/${lang}/`} class="hover:text-primary transition-colors">{t(lang, 'breadcrumb.home')}</a></li>
+        <li class="text-outline/40">/</li>
+        <li><a href={`/${lang}/blog/`} class="hover:text-primary transition-colors">Blog</a></li>
+        <li class="text-outline/40">/</li>
+        <li class="text-on-surface font-semibold truncate max-w-[200px]">{postTitle}</li>
+      </ol>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="relative overflow-hidden" style="background: linear-gradient(135deg, #1A2A60 0%, #243880 40%, #3D5099 100%);">
+    <div class="container-narrow relative py-16 md:py-24">
+      <div class="max-w-3xl">
+        <div class="flex items-center gap-3 mb-4">
+          <span class="label text-gold-400/80">{post.category.toUpperCase()}</span>
+          <span class="text-sm text-white/40 font-medium">{post.date}</span>
+          <span class="text-sm text-white/40 font-medium">{post.readTime} min</span>
+        </div>
+        <h1 class="text-3xl md:text-4xl lg:text-[2.75rem] font-extrabold text-white leading-[1.15] tracking-tight">{postTitle}</h1>
+        <p class="mt-5 text-base text-white/55 font-medium leading-relaxed">{postExcerpt}</p>
+      </div>
+    </div>
+    <div class="wave-divider"><svg viewBox="0 0 1440 60" preserveAspectRatio="none" class="w-full h-[40px] md:h-[60px] block" fill="#fcf8fb"><path d="M0 60h1440V20Q1080 60 720 40T0 50z"/></svg></div>
+  </section>
+
+  <!-- Article Content -->
+  <article class="py-16 md:py-24 bg-surface">
+    <div class="container-narrow">
+      <div class="max-w-3xl mx-auto prose-tok" set:html={postContent} />
+    </div>
+  </article>
+
+  <!-- CTA -->
+  <section class="py-16 bg-surface-container-low">
+    <div class="container-narrow">
+      <div class="rounded-2xl p-10 md:p-14 text-center" style="background: linear-gradient(135deg, #1A2A60, #3D5099);">
+        <h2 class="text-2xl font-extrabold text-white">{lang === 'tr' ? 'Kumanya Siparişi Vermek İster Misiniz?' : 'Need Ship Supply?'}</h2>
+        <p class="mt-3 text-white/50 font-medium">{t(lang, 'contact.subtitle')}</p>
+        <div class="mt-8 flex flex-col sm:flex-row justify-center gap-3">
+          <a href="https://wa.me/905459477320" target="_blank" rel="noopener noreferrer" class="btn-whatsapp !py-3.5 !px-8">WhatsApp</a>
+          <a href={`/${lang}/${slugs.contact[lang]}/`} class="btn-gold !py-3.5 !px-8">{lang === 'tr' ? 'İletişim' : 'Contact'}</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style is:global>
+  .prose-tok h2 {
+    @apply text-2xl font-extrabold text-on-surface mt-12 mb-5 tracking-tight;
+  }
+  .prose-tok h3 {
+    @apply text-lg font-extrabold text-on-surface mt-8 mb-3 tracking-tight;
+  }
+  .prose-tok p {
+    @apply text-base text-on-surface-variant font-medium leading-relaxed mb-5;
+  }
+  .prose-tok ul, .prose-tok ol {
+    @apply mb-5 space-y-2 pl-5;
+  }
+  .prose-tok li {
+    @apply text-base text-on-surface-variant font-medium leading-relaxed;
+  }
+  .prose-tok ul li { @apply list-disc; }
+  .prose-tok ol li { @apply list-decimal; }
+  .prose-tok strong {
+    @apply font-extrabold text-on-surface;
+  }
+  .prose-tok a {
+    @apply text-primary font-semibold hover:underline;
+  }
+</style>

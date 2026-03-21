@@ -1,0 +1,88 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { LANGUAGES, type Lang, t, slugs, langConfigs } from '@data/i18n';
+import { blogPosts } from '@data/blog-posts';
+
+export function getStaticPaths() {
+  return LANGUAGES.map(lang => ({ params: { lang }, props: { lang } }));
+}
+
+const { lang } = Astro.props as { lang: Lang };
+const alternates = LANGUAGES.map(l => ({ lang: l as Lang, path: `/${l}/blog/` }));
+const sortedPosts = [...blogPosts].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+---
+
+<BaseLayout
+  title={`Blog | Tok Ship Supply`}
+  description={lang === 'tr' ? 'Denizcilik sektörü, gemi kumanya ve tedarik hakkında güncel bilgiler ve rehberler.' : 'Latest news, guides and insights about maritime industry, ship supply and provisioning.'}
+  lang={lang}
+  canonicalPath={`/${lang}/blog/`}
+  alternates={alternates}
+>
+  <!-- Breadcrumb -->
+  <nav class="bg-surface-container-low" aria-label="Breadcrumb">
+    <div class="container-narrow py-3.5">
+      <ol class="flex items-center gap-2 text-sm font-medium text-on-surface-variant">
+        <li><a href={`/${lang}/`} class="hover:text-primary transition-colors">{t(lang, 'breadcrumb.home')}</a></li>
+        <li class="text-outline/40">/</li>
+        <li class="text-on-surface font-semibold">Blog</li>
+      </ol>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="relative overflow-hidden" style="background: linear-gradient(135deg, #1A2A60 0%, #243880 40%, #3D5099 100%);">
+    <div class="absolute inset-0 opacity-[0.04]" style="background-image: url('data:image/svg+xml,%3Csvg width=&quot;80&quot; height=&quot;80&quot; viewBox=&quot;0 0 80 80&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;%3E%3Cg fill=&quot;%23ffffff&quot;%3E%3Ccircle cx=&quot;40&quot; cy=&quot;40&quot; r=&quot;1.5&quot;/%3E%3C/g%3E%3C/svg%3E');"></div>
+    <div class="container-narrow relative py-20 md:py-28">
+      <span class="label-gold">BLOG</span>
+      <h1 class="mt-4 text-4xl md:text-5xl font-extrabold text-white tracking-tight">
+        {lang === 'tr' ? 'Denizcilik & Kumanya Rehberi' : lang === 'ru' ? 'Блог о морском снабжении' : lang === 'es' ? 'Blog Marítimo' : 'Maritime & Provisioning Blog'}<span class="text-gold-400">.</span>
+      </h1>
+      <p class="mt-5 text-lg text-white/55 font-medium max-w-2xl">
+        {lang === 'tr' ? 'Denizcilik sektörü, gemi kumanya, tedarik zinciri ve liman hizmetleri hakkında güncel bilgiler, rehberler ve haberler.' : 'Latest insights, guides and news about maritime industry, ship provisioning, supply chain and port services.'}
+      </p>
+    </div>
+    <div class="wave-divider"><svg viewBox="0 0 1440 60" preserveAspectRatio="none" class="w-full h-[40px] md:h-[60px] block" fill="#fcf8fb"><path d="M0 60h1440V20Q1080 60 720 40T0 50z"/></svg></div>
+  </section>
+
+  <!-- Posts Grid -->
+  <section class="py-20 md:py-28 bg-surface">
+    <div class="container-narrow">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {sortedPosts.map((post, i) => (
+          <a href={`/${lang}/blog/${post.slug[lang] ?? post.slug.tr}/`}
+             class={`group rounded-xl bg-surface-container-lowest overflow-hidden transition-all duration-300 hover:shadow-ambient ${i === 0 ? 'md:col-span-2 lg:col-span-2' : ''}`}>
+            {/* Color bar based on category */}
+            <div class="h-1.5" style={`background: linear-gradient(90deg, ${
+              post.category === 'gida' ? '#22c55e, #16a34a' :
+              post.category === 'liman' ? '#3b82f6, #1d4ed8' :
+              post.category === 'rehber' ? '#f59e0b, #d97706' :
+              post.category === 'ekipman' ? '#ef4444, #dc2626' :
+              post.category === 'teknik' ? '#8b5cf6, #7c3aed' :
+              post.category === 'lojistik' ? '#06b6d4, #0891b2' :
+              post.category === 'trend' ? '#ec4899, #db2777' :
+              '#64748b, #475569'
+            });`}></div>
+            <div class="p-7">
+              <div class="flex items-center gap-3 mb-4">
+                <span class="label !text-[10px] bg-surface-container-low px-2.5 py-1 rounded-lg">{post.category.toUpperCase()}</span>
+                <span class="text-xs text-on-surface-variant font-medium">{post.date}</span>
+                <span class="text-xs text-on-surface-variant font-medium ml-auto">{post.readTime} min</span>
+              </div>
+              <h2 class={`font-extrabold text-on-surface group-hover:text-primary transition-colors ${i === 0 ? 'text-xl md:text-2xl' : 'text-base'}`}>
+                {post.title[lang] ?? post.title.tr}
+              </h2>
+              <p class="mt-3 text-sm text-on-surface-variant font-medium leading-relaxed line-clamp-3">
+                {post.excerpt[lang] ?? post.excerpt.tr}
+              </p>
+              <div class="mt-5 flex items-center gap-1.5 text-sm font-semibold text-primary">
+                {lang === 'tr' ? 'Devamını Oku' : 'Read More'}
+                <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+              </div>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

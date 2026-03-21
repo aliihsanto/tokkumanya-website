@@ -29,6 +29,7 @@ function getLangUrl(targetLang: Lang): string {
           { href: `/${lang}/${slugs.services[lang]}/`, label: nav.services },
           { href: `/${lang}/${slugs.ports[lang]}/`, label: nav.ports },
           { href: `/${lang}/${slugs.about[lang]}/`, label: nav.about },
+          { href: `/${lang}/blog/`, label: 'Blog' },
           { href: `/${lang}/${slugs.references[lang]}/`, label: lang === 'tr' ? 'Referanslar' : lang === 'ru' ? 'Партнёры' : lang === 'es' ? 'Referencias' : lang === 'ar' ? 'مراجع' : lang === 'fr' ? 'Références' : 'References' },
           { href: `/${lang}/${slugs.contact[lang]}/`, label: nav.contact },
         ].map(item => (
