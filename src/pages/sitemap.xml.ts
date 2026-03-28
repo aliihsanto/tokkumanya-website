@@ -5,7 +5,7 @@ import { services } from '@data/services';
 import { keywordPatterns } from '@data/keywords';
 import { blogPosts } from '@data/blog-posts';
 
-const SITE = import.meta.env.SITE ?? 'https://www.tokkumanya.com';
+const SITE = import.meta.env.SITE ?? 'https://tokshipsupply.com';
 
 function url(path: string, priority: string, changefreq: string): string {
   return `  <url>\n    <loc>${SITE}${path}</loc>\n    <changefreq>${changefreq}</changefreq>\n    <priority>${priority}</priority>\n  </url>`;

@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.tokkumanya.com/sitemap.xml
+Sitemap: https://tokshipsupply.com/sitemap.xml
